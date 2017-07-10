@@ -1,0 +1,14 @@
+steps:
+    step1:
+      name: Проверка создания организации
+      request:
+        header:
+         messageType: GW.CREATE.REQ
+         infoBrokerId: e248ad9d-9ed9-477a-b7a6-4c434f590b3f
+        body:
+         documentID: ba07755-56ff-42c9-b904-e2e506231f5d
+         refDocumentID: 123
+         participantMode: ED
+      response:
+        header:
+          result: GW.CREATR.RES

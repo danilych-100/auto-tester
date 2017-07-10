@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.kontur.fts.eps.schemas:eps-reference-schemas-dto:1.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/ru/kontur/fts/eps/schemas/eps-reference-schemas-dto/1.1/eps-reference-schemas-dto-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
