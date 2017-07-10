@@ -4,16 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.MarshallingException;
 import org.springframework.oxm.jibx.JibxMarshaller;
 import org.springframework.stereotype.Service;
-import ru.kontur.fts.eps.schemas.common.BodyType;
+import renue.fts.gateway.admin.autotest.config.TestStepConfig;
+import renue.fts.gateway.admin.autotest.document.Document;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
-import ru.kontur.fts.eps.schemas.common.HeaderType;
 
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 /**
  * Created by Danil on 07.07.2017.
@@ -24,8 +24,10 @@ public class MarshallingService {
     @Autowired
     private JibxMarshaller marshaller;
 
+    @Autowired
+    private TestStepConfig testStepConfig;
     /**
-     *
+     *adsda.
      * @param envelopeType
      * @return
      */
@@ -33,15 +35,15 @@ public class MarshallingService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         StreamResult result = new StreamResult(out);
 
-        HeaderType headers = new HeaderType();
-        BodyType body = new BodyType();
-        envelopeType.setHeader(headers);
-        envelopeType.setBody(body);
+        Document document = new Document(testStepConfig);
+        envelopeType.setHeader(document.getHeaderType());
+        envelopeType.setBody(document.getBodyType());
 
         marshaller.marshal(envelopeType, result);
 
         System.out.println("Замаршелили");
         envelopeType.getHeader().getAnyList().forEach(elem-> System.out.println(elem));
+        envelopeType.getBody().getAnyList().forEach(elem-> System.out.println(elem));
 
         byte[] bytes = out.toByteArray();
         System.out.println(new String(bytes));
@@ -49,7 +51,7 @@ public class MarshallingService {
     }
 
     /**
-     *
+     *asd.
      * @param bytes
      * @return
      * @throws MarshallingException

@@ -33,6 +33,7 @@ public class JmsConfig {
     private MyMessageListener messageListener;
 
 
+
     /**
      * Create connection factory.
      * @return connectionFactory
@@ -64,6 +65,9 @@ public class JmsConfig {
         template.setDefaultDestinationName(QUEUE_DESTINATION_NAME);
         return template;
     }
+
+    /*@Autowired
+    private TestStepConfig testStepConfig;*/
 
     /**
      * Create MessageListener.

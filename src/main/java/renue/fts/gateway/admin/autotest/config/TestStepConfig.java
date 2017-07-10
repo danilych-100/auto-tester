@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
+import renue.fts.gateway.admin.autotest.document.Step;
 
 /**
  * Created by Danil on 07.07.2017.

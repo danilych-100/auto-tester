@@ -9,6 +9,15 @@ steps:
          documentID: ba07755-56ff-42c9-b904-e2e506231f5d
          refDocumentID: 123
          participantMode: ED
+         organizationInfo:
+            title: Сбер
+            inn: 7707083893
+            kpp: 783502001
+            ogrn: 1027700132195
+            adress: Ленина 1
+         participantInfo:
+            docBasisType: REQUEST
+            docBasisNumber: 1
       response:
         header:
-          result: GW.CREATR.RES
+          messageType: GW.CREATR.RES

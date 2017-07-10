@@ -1,4 +1,4 @@
-package renue.fts.gateway.admin.autotest.config;
+package renue.fts.gateway.admin.autotest.document;
 
 import lombok.Data;
 
@@ -7,5 +7,5 @@ import lombok.Data;
  */
 @Data
 public class Response {
-
+    private Header header;
 }

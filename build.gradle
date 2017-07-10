@@ -39,6 +39,7 @@ dependencies {
     compile "ru.kontur.fts.eps.schemas:eps-reference-schemas-dto:1.1"
     compile "ru.kontur.fts.eps.schemas:gw-admin-schemas-dto:1.2-20170526"
     compile "org.springframework.boot:spring-boot-configuration-processor"
+    compile "ru.kontur.fts.eps.schemas:marshaller:1.0"
 }
 
 compileJava.dependsOn(processResources)
