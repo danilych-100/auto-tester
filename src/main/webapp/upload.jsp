@@ -11,7 +11,6 @@
     <h2>Spring Boot file upload example</h2>
 
     <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="file" /><br/><br/>
         <input type="submit" value="Submit" />
     </form>
 

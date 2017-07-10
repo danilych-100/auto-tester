@@ -10,5 +10,5 @@ public interface IFileLoader {
     /**
      * Load file from FileSystem.
      */
-    void loadFileFromDir(File dir) throws FileNotFoundException;
+    String loadFileFromDir() throws FileNotFoundException;
 }

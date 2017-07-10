@@ -27,21 +27,20 @@ public class FileUploadController {
     }
 
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") final String name,
-                                                 @RequestParam("file") final MultipartFile file){
+    public @ResponseBody String handleFileUpload(@RequestParam("file") final MultipartFile file){
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Danil\\Desktop\\"+ name + "-uploaded")));
+                        new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\Danil\\IdeaProjects\\auto-tester\\src\\main\\resources\\application.yml")));
                 stream.write(bytes);
                 stream.close();
-                return "Вы удачно загрузили " + name + " в " +"C:\\Users\\Danil\\Desktop\\" +name + "-uploaded !";
+                return "Вы удачно загрузили " + "application.yml" + " в " +"C:\\Users\\Danil\\IdeaProjects\\auto-tester\\src\\main\\resources\\application.yml";
             } catch (Exception e) {
-                return "Вам не удалось загрузить " + name + " => " + e.getMessage();
+                return "Вам не удалось загрузить " + "application.yml" + " => " + e.getMessage();
             }
         } else {
-            return "Вам не удалось загрузить " + name + " потому что файл пустой.";
+            return "Вам не удалось загрузить " + "application.yml" + " потому что файл пустой.";
         }
     }
 

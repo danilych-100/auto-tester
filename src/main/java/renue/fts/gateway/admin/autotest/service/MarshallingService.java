@@ -42,8 +42,6 @@ public class MarshallingService {
         marshaller.marshal(envelopeType, result);
 
         System.out.println("Замаршелили");
-        envelopeType.getHeader().getAnyList().forEach(elem-> System.out.println(elem));
-        envelopeType.getBody().getAnyList().forEach(elem-> System.out.println(elem));
 
         byte[] bytes = out.toByteArray();
         System.out.println(new String(bytes));
@@ -51,7 +49,7 @@ public class MarshallingService {
     }
 
     /**
-     *asd.
+     *
      * @param bytes
      * @return
      * @throws MarshallingException
@@ -61,7 +59,6 @@ public class MarshallingService {
             EnvelopeType envelopeType = (EnvelopeType) marshaller.unmarshal(new StreamSource(new ByteArrayInputStream(bytes)));
 
             System.out.println("Размаршелили");
-            envelopeType.getHeader().getAnyList().forEach(elem-> System.out.println(elem));
             return envelopeType;
 
         } catch (Exception e) {

@@ -36,7 +36,7 @@ public class MyMessageSender {
         try {
             byte[] marsheledEnv = marshallingService.marshall(envelopeType);
 
-            System.out.println("Jms Message Sender : " + marsheledEnv);
+            System.out.println("Отправили сообщение!");
             jmsTemplate.convertAndSend(marsheledEnv);
         } catch (IOException e) {
             e.printStackTrace();

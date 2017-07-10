@@ -36,6 +36,7 @@ public class MyMessageListener implements javax.jms.MessageListener {
             System.out.println("Message has been consumed");
             try {
                 byte[]  a = parseInputMessage(message);
+                System.out.println(new String(a));
                 EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(a);
             } catch (JMSException e) {
                 e.printStackTrace();
