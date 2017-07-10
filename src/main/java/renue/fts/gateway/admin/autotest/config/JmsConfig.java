@@ -12,8 +12,6 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.MessageListenerContainer;
 import org.springframework.oxm.jibx.JibxMarshaller;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
-import ru.kontur.fts.eps.schemas.gwadmin.complextype.BaseDocType;
-import ru.kontur.fts.eps.schemas.gwadmin.createparticipantrequest.CreateParticipantRequestType;
 
 import javax.jms.JMSException;
 
@@ -34,12 +32,10 @@ public class JmsConfig {
     @Autowired
     private MyMessageListener messageListener;
 
-    @Autowired
-    private TestStepConfig testStepConfig;
 
     /**
-     *
-     * @return
+     * Create connection factory.
+     * @return connectionFactory
      */
     @Bean
     public MQQueueConnectionFactory connectionFactory() {
@@ -58,7 +54,7 @@ public class JmsConfig {
     }
 
     /**
-     *
+     * Create Template.
      * @return
      */
     @Bean
@@ -70,7 +66,7 @@ public class JmsConfig {
     }
 
     /**
-     *
+     * Create MessageListener.
      * @return
      */
     @Bean
@@ -79,14 +75,11 @@ public class JmsConfig {
         container.setConnectionFactory(connectionFactory());
         container.setDestinationName(QUEUE_DESTINATION_NAME);
         container.setMessageListener(messageListener);
-        BaseDocType baseDocType = testStepConfig.getStep1().getRequest().getBody();
-        if(baseDocType instanceof CreateParticipantRequestType) System.out.println("lele");
-        CreateParticipantRequestType kek = (CreateParticipantRequestType) baseDocType;
         return container;
     }
 
     /**
-     *
+     * Create Marshaller.
      * @return
      */
     @Bean
