@@ -19,36 +19,36 @@
         <element id="directory" name="lib">
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.headers.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/dhbcore.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jms.Nojndi.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.pcf.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Nonexport.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/fscontext.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.axis2.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mqjms.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/rmm.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.soap.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.defaultconfig.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jms.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jta.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/ldap.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.tools.ras.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jmqi.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/rmm.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Export.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/ojdbc14-10.2.0.3.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Nonexport.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.soap.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/connector.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/providerutil.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.defaultconfig.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.postcard.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/jndi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jms.Nojndi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/fscontext.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jms.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.commonservices.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jta.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.axis2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/ldap.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.tools.ras.jar" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-jms:4.3.9.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-oxm:4.3.9.RELEASE" />
           <element id="library" level="project" name="Gradle: org.jibx:jibx-run:1.3.1" />
           <element id="library" level="project" name="Gradle: org.yaml:snakeyaml:1.8" />
-          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:eps-reference-schemas-dto:1.1" />
           <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:gw-admin-schemas-dto:1.2-20170526" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-configuration-processor:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:marshaller:1.0" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.hibernate:hibernate-validator:5.3.5.Final" />
@@ -64,6 +64,8 @@
           <element id="library" level="project" name="Gradle: joda-time:joda-time:2.9.9" />
           <element id="library" level="project" name="Gradle: xpp3:xpp3:1.1.3.4.O" />
           <element id="library" level="project" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
+          <element id="library" level="project" name="Gradle: commons-codec:commons-codec:1.10" />
+          <element id="library" level="project" name="Gradle: org.jibx:jibx-extras:1.2.5" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-logging:1.5.4.RELEASE" />
@@ -76,18 +78,15 @@
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.8" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: dom4j:dom4j:1.6.1" />
+          <element id="library" level="project" name="Gradle: org.jdom:jdom:1.1.3" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.1.11" />
           <element id="library" level="project" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" />
           <element id="library" level="project" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" />
           <element id="library" level="project" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Gradle: xml-apis:xml-apis:1.4.01" />
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/ru/kontur/fts/eps/schemas/marshaller/1.0/marshaller-1.0.jar" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.10/commons-codec-1.10.jar" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jibx/jibx-extras/1.2.5/jibx-extras-1.2.5.jar" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" />
-          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jdom/jdom/1.1.3/jdom-1.1.3.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-apis/xml-apis/1.4.01/3789d9fada2d3d458c4ba2de349d48780f381ee3/xml-apis-1.4.01.jar" />
         </element>
       </element>
     </root>

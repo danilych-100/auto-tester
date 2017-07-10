@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ru.kontur.fts.eps.schemas:marshaller:1.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/ru/kontur/fts/eps/schemas/marshaller/1.0/marshaller-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
