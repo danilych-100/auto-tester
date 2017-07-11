@@ -5,7 +5,6 @@ import org.springframework.oxm.MarshallingException;
 import org.springframework.oxm.jibx.JibxMarshaller;
 import org.springframework.stereotype.Service;
 import renue.fts.gateway.admin.autotest.config.TestStepConfig;
-import renue.fts.gateway.admin.autotest.document.Document;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 
 import javax.xml.transform.stream.StreamResult;
@@ -26,8 +25,10 @@ public class MarshallingService {
 
     @Autowired
     private TestStepConfig testStepConfig;
+
     /**
-     *adsda.
+     * adsda.
+     *
      * @param envelopeType
      * @return
      */
@@ -35,21 +36,29 @@ public class MarshallingService {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         StreamResult result = new StreamResult(out);
 
-        Document document = new Document(testStepConfig);
-        envelopeType.setHeader(document.getHeaderType());
-        envelopeType.setBody(document.getBodyType());
-
         marshaller.marshal(envelopeType, result);
-
         System.out.println("Замаршелили");
 
         byte[] bytes = out.toByteArray();
-        System.out.println(new String(bytes));
+        printForPeople(bytes);
         return bytes;
     }
 
+    /**Print bytes string in people comfortable view.
+     * @param bytes
+     */
+    private void printForPeople(final byte[] bytes) {
+        String stringBytes = new String(bytes);
+        for (int i = 0; i < stringBytes.length(); i++) {
+            char simbol = stringBytes.charAt(i);
+            System.out.print(simbol);
+            if (simbol == '>') {
+                System.out.println();
+            }
+        }
+    }
+
     /**
-     *
      * @param bytes
      * @return
      * @throws MarshallingException
@@ -57,7 +66,6 @@ public class MarshallingService {
     public Object unmarshall(final byte[] bytes) throws Exception {
         try {
             EnvelopeType envelopeType = (EnvelopeType) marshaller.unmarshal(new StreamSource(new ByteArrayInputStream(bytes)));
-
             System.out.println("Размаршелили");
             return envelopeType;
 

@@ -34,21 +34,21 @@ public class Document {
      * SetUp Body.
      */
     private void setUpBodyFromConfig() {
-        DocumentHeaderChecker documentHeaderChecker = new DocumentHeaderChecker(testStepConfig.getStep1()
+        DocumentHeaderChecker documentHeaderChecker = new DocumentHeaderChecker(testStepConfig.getSteps().getStep1()
                 .getRequest()
                 .getHeader()
                 .getMessageType());
 
         BaseDocType baseDocType = documentHeaderChecker.getDocumentTypeByHeader();
-        baseDocType.setDocumentID(testStepConfig.getStep1()
+        baseDocType.setDocumentID(testStepConfig.getSteps().getStep1()
                 .getRequest()
                 .getBody()
                 .getDocumentID());
-        baseDocType.setRefDocumentID(testStepConfig.getStep1()
+        baseDocType.setRefDocumentID(testStepConfig.getSteps().getStep1()
                 .getRequest()
                 .getBody()
                 .getRefDocumentID());
-        fillBaseDocType(baseDocType, testStepConfig.getStep1().getRequest().getBody());
+        fillBaseDocType(baseDocType, testStepConfig.getSteps().getStep1().getRequest().getBody());
 
         bodyType.setAnyList(Arrays.<Object>asList(baseDocType));
     }
@@ -82,11 +82,11 @@ public class Document {
      */
     private void setUpHeaderFromConfig() {
         GWHeaderType gwHeader = new GWHeaderType();
-        String mt = testStepConfig.getStep1()
+        String mt = testStepConfig.getSteps().getStep1()
                 .getRequest()
                 .getHeader()
                 .getMessageType();
-        String ib = testStepConfig.getStep1()
+        String ib = testStepConfig.getSteps().getStep1()
                 .getRequest()
                 .getHeader()
                 .getInfoBrokerId();
@@ -100,7 +100,7 @@ public class Document {
         routingInf.setReceiverInformationList(Collections.singletonList("wmq://RU.FTS.ASVD.EPS/GW.EPS.DECL.FROM"));
         routingInf.setPreparationDateTime(DateTime.parse("2017-03-01"));
 
-        headerType.setAnyList(Arrays.<Object>asList(routingInf));
+        headerType.setAnyList(Arrays.<Object>asList(routingInf,gwHeader));
     }
 
 
