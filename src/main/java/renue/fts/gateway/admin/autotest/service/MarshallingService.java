@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.MarshallingException;
 import org.springframework.oxm.jibx.JibxMarshaller;
 import org.springframework.stereotype.Service;
-import renue.fts.gateway.admin.autotest.config.TestStepConfig;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 
 import javax.xml.transform.stream.StreamResult;
@@ -15,7 +14,7 @@ import java.io.IOException;
 
 
 /**
- * Created by Danil on 07.07.2017.
+ * Marshall service.
  */
 @Service
 public class MarshallingService {
@@ -23,14 +22,11 @@ public class MarshallingService {
     @Autowired
     private JibxMarshaller marshaller;
 
-    @Autowired
-    private TestStepConfig testStepConfig;
 
     /**
-     * adsda.
-     *
-     * @param envelopeType
-     * @return
+     * Marshall EnvelopeType to XML view.
+     * @param envelopeType EnvelopeType.
+     * @return bytes of marshaled EnvelopeType.
      */
     public byte[] marshall(final EnvelopeType envelopeType) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -44,7 +40,8 @@ public class MarshallingService {
         return bytes;
     }
 
-    /**Print bytes string in people comfortable view.
+    /**
+     * Print bytes string in people comfortable view.
      * @param bytes
      */
     private void printForPeople(final byte[] bytes) {
@@ -59,8 +56,9 @@ public class MarshallingService {
     }
 
     /**
-     * @param bytes
-     * @return
+     * Unmarshall input bytes array.
+     * @param bytes Recieved bytes array.
+     * @return Unmarshaled object
      * @throws MarshallingException
      */
     public Object unmarshall(final byte[] bytes) throws Exception {

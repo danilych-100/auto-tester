@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.MultipartConfigElement;
 
 /**
- * Created by Danil on 07.07.2017.
+ * Configuration of web list.
  */
 @Configuration
 public class WebConfig {
 
     /**
-     *
-     * @return
+     * Configuration of web list.
+     * @return MultipartConfigElement instance
      */
     @Bean
     public MultipartConfigElement multipartConfigElement() {

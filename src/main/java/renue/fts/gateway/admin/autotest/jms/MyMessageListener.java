@@ -1,24 +1,19 @@
-//CHECKSTYLE:OFF
 package renue.fts.gateway.admin.autotest.jms;
 
 import com.ibm.jms.JMSBytesMessage;
-import com.ibm.rmm.receiver.Event;
-import com.ibm.rmm.receiver.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import renue.fts.gateway.admin.autotest.service.MarshallingService;
+import renue.fts.gateway.admin.autotest.service.TesterService;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.TextMessage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
 
 /**
- * Created by Danil on 06.07.2017.
+ * Message listener.
  */
 @Component
 public class MyMessageListener implements javax.jms.MessageListener {
@@ -29,15 +24,19 @@ public class MyMessageListener implements javax.jms.MessageListener {
     @Autowired
     private MyMessageSender producer;
 
+    @Autowired
+    private TesterService testerService;
 
     @Override
-    public void onMessage(javax.jms.Message message) {
-        if(message instanceof BytesMessage){
+    public void onMessage(final javax.jms.Message message) {
+        if (message instanceof BytesMessage) {
             System.out.println("Message has been consumed");
             try {
-                byte[]  a = parseInputMessage(message);
-                System.out.println(new String(a));
-                EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(a);
+                byte[] answer = parseInputMessage(message);
+                System.out.println(new String(answer));
+                downloadEnvelopeToFS(answer);
+                EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(answer);
+                testerService.processResponse(envelopeType);
             } catch (JMSException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -46,10 +45,33 @@ public class MyMessageListener implements javax.jms.MessageListener {
         }
     }
 
-    public static byte[] parseInputMessage(Message message) throws JMSException {
+    /**
+     * Parse input mess.
+     * @param message
+     * @return
+     * @throws JMSException
+     */
+    public static byte[] parseInputMessage(final Message message) throws JMSException {
         byte[] body = new byte[((int) ((JMSBytesMessage) message).getBodyLength())];
         ((JMSBytesMessage) message).readBytes(body);
         return body;
+    }
+
+    /**
+     * donwload Envelope.
+     * @param envelopeTypebytes
+     */
+    private void downloadEnvelopeToFS(final byte[] envelopeTypebytes) {
+        try {
+            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(new File(
+                    "C:\\Users\\Danil\\Desktop\\answer.xml")));
+            outputStream.write(envelopeTypebytes);
+            outputStream.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

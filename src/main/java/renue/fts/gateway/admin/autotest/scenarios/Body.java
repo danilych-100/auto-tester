@@ -1,4 +1,4 @@
-package renue.fts.gateway.admin.autotest.document;
+package renue.fts.gateway.admin.autotest.scenarios;
 
 import lombok.Data;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.OrganizationInfoType;
@@ -7,11 +7,10 @@ import ru.kontur.fts.eps.schemas.gwadmin.simpletype.ParticipantMode;
 
 
 /**
- * Created by Danil on 10.07.2017.
+ * Transaction Body.
  */
 @Data
 public class Body {
-    private String documentID;
     private ParticipantMode participantMode;
     private String refDocumentID;
 

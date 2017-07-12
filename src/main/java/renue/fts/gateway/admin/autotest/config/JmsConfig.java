@@ -16,23 +16,22 @@ import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import javax.jms.JMSException;
 
 /**
- * Created by Danil on 07.07.2017.
+ * Configuration of JMS connection.
  */
 @ComponentScan({"renue.fts.gateway.admin.autotest.jms"})
 @Configuration
 public class JmsConfig {
 
-    public static final String CHANNEL_NAME = "TEST.CHANNEL";
-    public static final String QUEUE_MANAGER = "TEST";
-    public static final String QUEUE_DESTINATION_NAME = "TESTQ";
-    public static final int PORT = 1414;
-    public static final String HOST_NAME = "localhost";
+    public static final String CHANNEL_NAME = "GATEWAY.TEST.SVRCONN";
+    public static final String QUEUE_MANAGER = "RU.FTS.GATEWAY.ADMIN";
+    public static final String QUEUE_DESTINATION_NAME = "GW.IB.FROM";
+    public static final String QUEUE_RECIEVER_NAME = "BROKER.TO";
+    public static final int PORT = 1416;
+    public static final String HOST_NAME = "31.186.98.2";
 
 
     @Autowired
     private MyMessageListener messageListener;
-
-
 
     /**
      * Create connection factory.
@@ -77,7 +76,7 @@ public class JmsConfig {
     public MessageListenerContainer jmsListenerContainerFactory() {
         DefaultMessageListenerContainer container = new DefaultMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
-        container.setDestinationName(QUEUE_DESTINATION_NAME);
+        container.setDestinationName(QUEUE_RECIEVER_NAME);
         container.setMessageListener(messageListener);
         return container;
     }
