@@ -33,6 +33,7 @@ public class TesterService {
     private Step currentStep;
     private ValidationResult processingResult;
     private ScenariosDescription scenariosDescription;
+    @Autowired
     private ResponseValidator responseValidator;
 
     /**
@@ -52,6 +53,11 @@ public class TesterService {
      * Process step.
      */
     private void processStep() throws IOException {
+        if(!stepIterator.hasNext()){
+            System.out.println("Больше транзакций нет!");
+            return;
+        }
+
         currentStep=stepIterator.next();
 
         EnvelopeType envelope = createEnvelope();
@@ -73,13 +79,14 @@ public class TesterService {
      * Process REsponse.
      * @param envelopeType
      */
-    public void processResponse(final EnvelopeType envelopeType) throws IOException {
+    public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException {
         ValidationResult validateResult = responseValidator.validate(currentStep.getResponse(), envelopeType);
         if(validateResult.isValid()) {
             processStep();
         }
         else{
-            validateResult=validateResult;
+            //validateResult=validateResult;
+            validateResult.getFieldResult().forEach((name,field)-> System.out.println(name + "   "+field));
             return;
         }
     }

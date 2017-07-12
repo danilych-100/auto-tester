@@ -26,7 +26,7 @@ public class DocumentCreator {
 
         BaseDocType baseDocType = requestDocumentHeaderChecker.getDocumentTypeByHeader();
 
-        baseDocType.setRefDocumentID(currentStep.getRequest().getBody().getRefDocumentID());
+        baseDocType.setRefDocumentID(UUID.randomUUID().toString());
         baseDocType.setDocumentID(UUID.randomUUID().toString());
 
         fillBaseDocType(baseDocType,currentStep.getRequest().getBody());
