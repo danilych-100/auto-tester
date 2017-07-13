@@ -31,6 +31,11 @@ public class TesterService {
 
     private Iterator<Step> stepIterator;
     private Step currentStep;
+
+    public ValidationResult getProcessingResult() {
+        return processingResult;
+    }
+
     private ValidationResult processingResult;
     private ScenariosDescription scenariosDescription;
     @Autowired
@@ -80,13 +85,18 @@ public class TesterService {
      * @param envelopeType
      */
     public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException {
-        ValidationResult validateResult = responseValidator.validate(currentStep.getResponse(), envelopeType);
-        if(validateResult.isValid()) {
+        if(currentStep == null){
+            System.out.println("При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
+            return;
+        }
+        processingResult = responseValidator.validate(currentStep.getResponse(), envelopeType);
+        if(processingResult.isValid()) {
             processStep();
         }
         else{
-            //validateResult=validateResult;
-            validateResult.getFieldResult().forEach((name,field)-> System.out.println(name + "   "+field));
+            System.out.println("Ошибка валидации: ");
+            System.out.println(processingResult.getFieldResult().toString());
+            processingResult.getFieldResult().forEach((name,field)-> System.out.println(name+": "+field));
             return;
         }
     }

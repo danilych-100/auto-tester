@@ -13,11 +13,6 @@ import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
 import renue.fts.gateway.admin.autotest.service.TesterService;
 
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-
-
 /**
  * Controller for uploading file from file system.
  */
@@ -53,17 +48,10 @@ public class FileUploadController {
                 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
                 ScenariosDescription scenariosDescription = mapper.readValue(bytes, ScenariosDescription.class);
 
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(
-                                "C:\\Users\\Danil\\IdeaProjects\\auto-tester\\src\\main\\resources\\application.yml")));
-                stream.write(bytes);
-                stream.close();
-
                 String st = bytes.toString();
                 testerService.startProcess(scenariosDescription);
 
-                return "Вы удачно загрузили " + "application.yml" + " в "
-                        + "C:\\Users\\Danil\\IdeaProjects\\auto-tester\\src\\main\\resources\\application.yml";
+                return "Вы удачно загрузили " + "application.yml";
             } catch (Exception e) {
                 return "Вам не удалось загрузить " + "application.yml" + " => " + e.getMessage();
             }

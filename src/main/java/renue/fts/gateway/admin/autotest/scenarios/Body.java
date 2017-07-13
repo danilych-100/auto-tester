@@ -6,6 +6,8 @@ import ru.kontur.fts.eps.schemas.gwadmin.createparticipantrequest.WarehouseInfoT
 import ru.kontur.fts.eps.schemas.gwadmin.result.ResultInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.simpletype.ParticipantMode;
 
+import java.util.ArrayList;
+
 
 /**
  * Transaction Body.
@@ -17,7 +19,7 @@ public class Body {
     private OrganizationInfoType organizationInfo;
     private MyParticipantInfo participantInfo;
     private WarehouseInfoType warehouseInfo;
-    private ResultInfoType resultInfo;
+    private ArrayList<ResultInfoType> resultInfoList;
 
 
 }

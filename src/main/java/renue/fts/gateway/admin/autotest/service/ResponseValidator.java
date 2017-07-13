@@ -1,29 +1,19 @@
 package renue.fts.gateway.admin.autotest.service;
 
 
-import com.sun.webkit.dom.RangeImpl;
-import helper.EnvelopeHelper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
+import renue.fts.gateway.admin.autotest.helper.EnvelopeHelper;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.ranges.Range;
-import renue.fts.gateway.admin.autotest.documentutil.RequestDocumentHeaderChecker;
-import renue.fts.gateway.admin.autotest.scenarios.Header;
+import org.springframework.util.ReflectionUtils;
 import renue.fts.gateway.admin.autotest.scenarios.Response;
 import renue.fts.gateway.admin.autotest.validation.ValidationResult;
-import ru.kontur.fts.eps.schemas.common.ApplicationInfType;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import ru.kontur.fts.eps.schemas.common.HeaderType;
 import ru.kontur.fts.eps.schemas.common.RoutingInfType;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.BaseDocType;
 import ru.kontur.fts.eps.schemas.gwadmin.gwheader.GWHeaderType;
-import ru.kontur.fts.eps.schemas.marshaller.EnvelopeMarshaller;
-import ru.kontur.fts.eps.schemas.marshaller.EnvelopeUnmarshaller;
 
-import java.io.File;
 import java.lang.reflect.Field;
-import java.time.temporal.ValueRange;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Danil on 12.07.2017.
@@ -31,57 +21,110 @@ import java.util.List;
 @Service
 public class ResponseValidator {
     /**
-     * validate response.
+     * validate expectedResponse.
      *
-     * @param response
+     * @param expectedResponse
      * @param envelopeType
      * @return
      */
-    public ValidationResult validate(final Response response, final EnvelopeType envelopeType) throws
+    public ValidationResult validate(final Response expectedResponse, final EnvelopeType envelopeType) throws
             IllegalAccessException {
         ValidationResult validationResult = new ValidationResult();
-        validateHeaders(response, envelopeType.getHeader(), validationResult);
+        BaseDocType responseDocument = EnvelopeHelper.getDocument(envelopeType.getBody());
 
-        RequestDocumentHeaderChecker documentHeaderChecker = new RequestDocumentHeaderChecker(EnvelopeHelper.getGWHeaderType(
-                envelopeType.getHeader()).getMessageType());
-        ru.kontur.fts.eps.schemas.admin.intexchcommonaggregatetypescust.BaseDocType document = EnvelopeHelper.getDocument(
-                envelopeType.getBody());
-
-
-       /* Field[] fields = response.getClass().getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-            final int indexField = i;
-            fields[indexField].setAccessible(true);
-            for (Field highResponseField : fields[indexField].get(response).getClass().getDeclaredFields()) {
-                highResponseField.setAccessible(true);
-                for (Field expectedResponseField : highResponseField.get(response.getHeader())
-                        .getClass()
-                        .getDeclaredFields()) {
-                    expectedResponseField.setAccessible(true);
-                    for (Object element : envelopeType.getHeader().getAnyList()) {
-                        Arrays.stream(element.getClass().getDeclaredFields()).forEach(field -> {
-
-                            field.setAccessible(true);
-
-                            if (expectedResponseField.getName() == field.getName()) {
-                                try {
-                                    validationResult.setValid(expectedResponseField.get(fields[indexField]) == field.get(
-                                            element));
-                                } catch (IllegalAccessException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }*/
-
+        validateHeaders(expectedResponse, envelopeType.getHeader(), validationResult);
+        validateDocument(expectedResponse, responseDocument, validationResult);
         return validationResult;
     }
 
+    /**
+     * Validate Body document.
+     *
+     * @param expectedResponse
+     * @param baseDocType
+     * @param validationResult
+     */
+    private void validateDocument(final Response expectedResponse,
+                                  final BaseDocType baseDocType,
+                                  final ValidationResult validationResult) {
+        for (Field expectedField : expectedResponse.getBody().getClass().getDeclaredFields()) {
+            for (Field responseField : baseDocType.getClass().getDeclaredFields()) {
+                if (expectedField.getName() != responseField.getName()) {
+                    continue;
+                }
+                expectedField.setAccessible(true);
+                responseField.setAccessible(true);
+                try {
+                    Object expFieldValue = expectedField.get(expectedResponse.getBody());
+                    Object respFieldvalue = responseField.get(baseDocType);
+                    if (expFieldValue instanceof ArrayList) {
+                        if (respFieldvalue instanceof ArrayList) {
+                            validateListField(validationResult,
+                                              (ArrayList) expFieldValue,
+                                              (ArrayList) respFieldvalue);
+                        }
+                        continue;
+                    }
+                    if (expFieldValue == null) {
+                        continue;
+                    }
+                    if (expFieldValue.equals(respFieldvalue)) {
+                        validationResult.getFieldResult().put(expectedField.getName(), "Совпадение с ожидаемым");
+                    } else {
+                        validationResult.setValid(false);
+                        validationResult.getFieldResult()
+                                .put(expectedField.getName(), "Ожидалось: " + expFieldValue + " Пришло: " +
+
+                                        (String) respFieldvalue);
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     /**
+     * Валидируем поля, которые являются списками.
+     * Берем поля которые нам нужны из ожидаемых и сравниваем с соответсвующими в пришедшем.
+     *
+     * @param validationResult
+     * @param expFieldValue
+     * @param respFieldvalue
+     * @throws IllegalAccessException
+     */
+    private void validateListField(final ValidationResult validationResult,
+                                   final ArrayList expFieldValue,
+                                   final ArrayList respFieldvalue) throws IllegalAccessException {
+        for (int index = 0; index < expFieldValue.size(); index++) {
+            for (Field expectedListField : expFieldValue.get(index)
+                    .getClass()
+                    .getDeclaredFields()) {
+
+                Field responseListField = ReflectionUtils.findField(respFieldvalue.get(
+                        index).getClass(), expectedListField.getName());
+                expectedListField.setAccessible(true);
+                responseListField.setAccessible(true);
+
+                if (expectedListField.get(expFieldValue.get(index))
+                        .equals(responseListField.get(respFieldvalue.get(index)))) {
+                    validationResult.getFieldResult()
+                            .put(expectedListField.getName(), "Совпадение с ожидаемым");
+                } else {
+                    validationResult.setValid(false);
+                    validationResult.getFieldResult()
+                            .put(expectedListField.getName(),
+                                 "Ожидалось: " + expectedListField.get(expFieldValue.get(index)) + " Пришло: " +
+                                         (String) responseListField.get(
+                                                 respFieldvalue.get(index)));
+                }
+            }
+        }
+    }
+
+    /**
+     * Validate headers.
+     *
      * @param expectedResponse
      * @param responseHeaderType
      * @param validationResult
@@ -97,6 +140,8 @@ public class ResponseValidator {
     }
 
     /**
+     * Validate RoutingInfType.
+     *
      * @param expectedRoutingInf
      * @param responseRoutingInf
      * @param validationResult
@@ -104,27 +149,34 @@ public class ResponseValidator {
     private void validateRoutingInfType(final RoutingInfType expectedRoutingInf,
                                         final RoutingInfType responseRoutingInf,
                                         final ValidationResult validationResult) {
-        Field[] expectedFields = expectedRoutingInf.getClass().getDeclaredFields();
-        for (Field expectedField : expectedFields) {
+        for (Field expectedField : expectedRoutingInf.getClass().getSuperclass().getDeclaredFields()) {
+            Field responseField = ReflectionUtils.findField(responseRoutingInf.getClass(), expectedField.getName());
             expectedField.setAccessible(true);
-            for (Field responseField : responseRoutingInf.getClass().getDeclaredFields()) {
-                responseField.setAccessible(true);
-                if (expectedField.getName().equals(responseField.getName())) {
-                    try {
-                        if (expectedField.get(expectedRoutingInf) == responseField.get(responseRoutingInf)) {
-                            validationResult.getFieldResult().put(expectedField.getName(), "Совпадение с ожидаемым");
-                        } else {
-
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
+            responseField.setAccessible(true);
+            try {
+                Object expFieldValue = expectedField.get(expectedRoutingInf);
+                Object respFieldvalue = responseField.get(responseRoutingInf);
+                if (expFieldValue == null) {
+                    continue;
                 }
+                if (expFieldValue.equals(respFieldvalue)) {
+                    validationResult.getFieldResult().put(expectedField.getName(), "Совпадение с ожидаемым");
+                } else {
+                    validationResult.setValid(false);
+                    validationResult.getFieldResult()
+                            .put(expectedField.getName(), "Ожидалось: " + expFieldValue + " Пришло: " +
+
+                                    (String) respFieldvalue);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
     }
 
     /**
+     * ValidateGWHeaderType.
+     *
      * @param expectedGWHeader
      * @param responseGWHeader
      * @param validationResult
@@ -138,10 +190,14 @@ public class ResponseValidator {
                 responseField.setAccessible(true);
                 if (expectedField.getName().equals(responseField.getName())) {
                     try {
-                        if (expectedField.get(expectedGWHeader) == responseField.get(responseGWHeader)) {
+                        if (expectedField.get(expectedGWHeader).equals(responseField.get(responseGWHeader))) {
                             validationResult.getFieldResult().put(expectedField.getName(), "Совпадение с ожидаемым");
                         } else {
-
+                            validationResult.setValid(false);
+                            validationResult.getFieldResult()
+                                    .put(expectedField.getName(),
+                                         "Ожидалось: " + expectedField.get(expectedGWHeader) + " Пришло: " +
+                                                 (String) responseField.get(responseGWHeader));
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();

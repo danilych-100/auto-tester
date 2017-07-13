@@ -14,5 +14,6 @@
         <input type="submit" value="Submit" />
     </form>
 
+    <h3><a href="/log">Check log</a></h3>
 </body>
 </html>
