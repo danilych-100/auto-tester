@@ -9,6 +9,7 @@ import renue.fts.gateway.admin.autotest.helper.EnvelopeHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import renue.fts.gateway.admin.autotest.scenarios.Response;
+import renue.fts.gateway.admin.autotest.utils.ReflectionUtility;
 import renue.fts.gateway.admin.autotest.validation.ValidationResult;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import ru.kontur.fts.eps.schemas.common.HeaderType;
@@ -18,12 +19,13 @@ import ru.kontur.fts.eps.schemas.gwadmin.gwheader.GWHeaderType;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
- * Created by Danil on 12.07.2017.
+ * Response validation. A lot of reflection API.
  */
 @Service
-public class ResponseValidator {
+class ResponseValidator {
 
     @Autowired
     private VariableContainer variableContainer;
@@ -31,11 +33,11 @@ public class ResponseValidator {
     /**
      * validate expectedResponse.
      *
-     * @param expectedResponse
-     * @param envelopeType
-     * @return
+     * @param expectedResponse Expected Response from configuration.
+     * @param envelopeType     Responses EnvelopeType document.
+     * @return Validation result.
      */
-    public ValidationResult validate(final Response expectedResponse, final EnvelopeType envelopeType) throws
+    ValidationResult validate(final Response expectedResponse, final EnvelopeType envelopeType) throws
             IllegalAccessException {
         ValidationResult validationResult = new ValidationResult();
         BaseDocType responseDocument = EnvelopeHelper.getDocument(envelopeType.getBody());
@@ -48,16 +50,18 @@ public class ResponseValidator {
     /**
      * Validate Body document.
      *
-     * @param expectedResponse
-     * @param baseDocType
-     * @param validationResult
+     * @param expectedResponse Expected Response from configuration.
+     * @param baseDocType      Responses BaseDocType document.
+     * @param validationResult Validation result.
      */
     private void validateDocument(final Response expectedResponse,
                                   final BaseDocType baseDocType,
                                   final ValidationResult validationResult) {
-        for (Field expectedField : expectedResponse.getBody().getClass().getDeclaredFields()) {
-            for (Field responseField : baseDocType.getClass().getDeclaredFields()) {
-                if (expectedField.getName() != responseField.getName() || expectedField.getName() == "JiBX_bindingList") {
+        for (Field expectedField : ReflectionUtility
+                .getAllFields(expectedResponse.getBody().getClass(), new ArrayList<>())) {
+            for (Field responseField : ReflectionUtility.getAllFields(baseDocType.getClass(), new ArrayList<>())) {
+                if (!Objects.equals(expectedField.getName(), responseField.getName()) ||
+                        Objects.equals(expectedField.getName(), "JiBX_bindingList")) {
                     continue;
                 }
                 expectedField.setAccessible(true);
@@ -82,12 +86,11 @@ public class ResponseValidator {
                         variableContainer.addVariable(
                                 new DocumentVariable(varName, VariableType.RECEIVE, (String) respFieldvalue));
                         validationResult.getFieldResult().put(expectedField.getName(),
-                                                              "  Это переменная: " + varName + " Пришла: " + respFieldvalue);
+                                                              "  Это переменная:  " + varName + " Пришла: " + respFieldvalue);
                     } else {
                         validationResult.setValid(false);
                         validationResult.getFieldResult()
-                                .put(expectedField.getName(), "Ожидалось: " + expFieldValue + " Пришло: " +
-                                        (String) respFieldvalue);
+                                .put(expectedField.getName(), "Ожидалось: " + expFieldValue + " Пришло: " + respFieldvalue);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -100,35 +103,43 @@ public class ResponseValidator {
      * Валидируем поля, которые являются списками.
      * Берем поля которые нам нужны из ожидаемых и сравниваем с соответсвующими в пришедшем.
      *
-     * @param validationResult
-     * @param expFieldValue
-     * @param respFieldvalue
-     * @throws IllegalAccessException
+     * @param validationResult Validation result.
+     * @param expFieldValue    List of expected field from config.
+     * @param respFieldvalue   List of responses field from config.
+     * @throws IllegalAccessException throw exception.
      */
     private void validateListField(final ValidationResult validationResult,
                                    final ArrayList expFieldValue,
                                    final ArrayList respFieldvalue) throws IllegalAccessException {
         for (int index = 0; index < expFieldValue.size(); index++) {
-            for (Field expectedListField : expFieldValue.get(index).getClass().getDeclaredFields()) {
+            for (Field expectedListField : ReflectionUtility
+                    .getAllFields(expFieldValue.get(index).getClass(), new ArrayList<>())) {
 
-                Field responseListField = ReflectionUtils.findField(respFieldvalue.get(index).getClass(), expectedListField.getName());
+                Field responseListField = ReflectionUtils
+                        .findField(respFieldvalue.get(index).getClass(), expectedListField.getName());
                 expectedListField.setAccessible(true);
                 responseListField.setAccessible(true);
-                if(expectedListField.getName() == "JiBX_bindingList"){
+                if (Objects.equals(expectedListField.getName(), "JiBX_bindingList")) {
                     continue;
                 }
-                if (expectedListField.get(expFieldValue.get(index)).equals(responseListField.get(respFieldvalue.get(index)))) {
+                if (expectedListField.get(expFieldValue.get(index))
+                        .equals(responseListField.get(respFieldvalue.get(index)))) {
                     validationResult.getFieldResult().put(expectedListField.getName(), "Совпадение с ожидаемым");
 
-                } else if (DocumentVariable.isReceivedDocumentVariable((String) expectedListField.get(expFieldValue.get(index)))) {
-                    String varName = ((String) expectedListField.get(expFieldValue.get(index))).split("\\.")[1].replaceFirst("\\)", "");
-                    variableContainer.addVariable(new DocumentVariable(varName, VariableType.RECEIVE, (String) responseListField.get(respFieldvalue.get(index))));
+                } else if (DocumentVariable
+                        .isReceivedDocumentVariable((String) expectedListField.get(expFieldValue.get(index)))) {
+                    String varName = ((String) expectedListField.get(expFieldValue.get(index))).split("\\.")[1]
+                            .replaceFirst("\\)", "");
+                    variableContainer.addVariable(new DocumentVariable(varName, VariableType.RECEIVE,
+                                                                       (String) responseListField
+                                                                               .get(respFieldvalue.get(index))));
 
                 } else {
                     validationResult.setValid(false);
                     validationResult.getFieldResult().put(expectedListField.getName(),
-                                 "Ожидалось: " + expectedListField.get(expFieldValue.get(index)) + " Пришло: " +
-                                          responseListField.get(respFieldvalue.get(index)));
+                                                          "Ожидалось: " + expectedListField
+                                                                  .get(expFieldValue.get(index)) + " Пришло: " +
+                                                                  responseListField.get(respFieldvalue.get(index)));
                 }
             }
         }
@@ -137,9 +148,9 @@ public class ResponseValidator {
     /**
      * Validate headers.
      *
-     * @param expectedResponse
-     * @param responseHeaderType
-     * @param validationResult
+     * @param expectedResponse   Expected Response from configuration.
+     * @param responseHeaderType Response headers from configuration.
+     * @param validationResult   Validation results.
      */
     private void validateHeaders(final Response expectedResponse,
                                  final HeaderType responseHeaderType,
@@ -154,20 +165,20 @@ public class ResponseValidator {
     /**
      * Validate RoutingInfType.
      *
-     * @param expectedRoutingInf
-     * @param responseRoutingInf
-     * @param validationResult
+     * @param expectedRoutingInf Expected Routing Information from configuration.
+     * @param responseRoutingInf Response Routing Information from configuration.
+     * @param validationResult   Validation results.
      */
     private void validateRoutingInfType(final RoutingInfType expectedRoutingInf,
                                         final RoutingInfType responseRoutingInf,
                                         final ValidationResult validationResult) throws IllegalAccessException {
-        for (Field expectedField : expectedRoutingInf.getClass().getSuperclass().getDeclaredFields()) {
+        for (Field expectedField : ReflectionUtility.getAllFields(expectedRoutingInf.getClass(), new ArrayList<>())) {
             Field responseField = ReflectionUtils.findField(responseRoutingInf.getClass(), expectedField.getName());
             expectedField.setAccessible(true);
             responseField.setAccessible(true);
             Object expFieldValue = expectedField.get(expectedRoutingInf);
             Object respFieldvalue = responseField.get(responseRoutingInf);
-            if (expFieldValue == null || expectedField.getName() == "JiBX_bindingList") {
+            if (expFieldValue == null || Objects.equals(expectedField.getName(), "JiBX_bindingList")) {
                 continue;
             }
             if (expFieldValue.equals(respFieldvalue)) {
@@ -193,25 +204,29 @@ public class ResponseValidator {
     /**
      * ValidateGWHeaderType.
      *
-     * @param expectedGWHeader
-     * @param responseGWHeader
-     * @param validationResult
+     * @param expectedGWHeader Expected GWHeaders from configuration.
+     * @param responseGWHeader Response GWHeaders from configuration.
+     * @param validationResult Validation results.
      */
     private void validateGWHeaderType(final GWHeaderType expectedGWHeader,
                                       final GWHeaderType responseGWHeader,
                                       final ValidationResult validationResult) throws IllegalAccessException {
-        for (Field expectedField : expectedGWHeader.getClass().getDeclaredFields()) {
+        for (Field expectedField : ReflectionUtility.getAllFields(expectedGWHeader.getClass(), new ArrayList<>())) {
             expectedField.setAccessible(true);
-            for (Field responseField : responseGWHeader.getClass().getDeclaredFields()) {
+            for (Field responseField : ReflectionUtility.getAllFields(responseGWHeader.getClass(), new ArrayList<>())) {
                 responseField.setAccessible(true);
-                if (expectedField.getName().equals(responseField.getName()) && expectedField.getName() != "JiBX_bindingList"
-                        && responseField.getName()!= "JiBX_bindingList") {
+                if (expectedField.getName().equals(responseField.getName()) &&
+                        !Objects.equals(expectedField.getName(), "JiBX_bindingList")
+                        && !Objects.equals(responseField.getName(), "JiBX_bindingList")) {
+
                     if (DocumentVariable.isReceivedDocumentVariable((String) expectedField.get(expectedGWHeader))) {
                         String varName = ((String) expectedField.get(expectedGWHeader)).split("\\.")[1]
                                 .replaceFirst("\\)", "");
                         variableContainer.addVariable(new DocumentVariable(varName, VariableType.RECEIVE,
-                                                                           (String) responseField.get(responseGWHeader)));
-                        validationResult.getFieldResult().put(expectedField.getName(), "  Это переменная: " + varName + " Пришла: "
+                                                                           (String) responseField
+                                                                                   .get(responseGWHeader)));
+                        validationResult.getFieldResult()
+                                .put(expectedField.getName(), "  Это переменная: " + varName + " Пришла: "
                                         + responseField.get(responseGWHeader));
                         continue;
                     }
@@ -220,7 +235,8 @@ public class ResponseValidator {
                     } else {
                         validationResult.setValid(false);
                         validationResult.getFieldResult().put(expectedField.getName(),
-                                                              "Ожидалось: " + expectedField.get(expectedGWHeader) + " Пришло: " + responseField
+                                                              "Ожидалось: " + expectedField
+                                                                      .get(expectedGWHeader) + " Пришло: " + responseField
                                                                       .get(responseGWHeader));
                     }
                 }
