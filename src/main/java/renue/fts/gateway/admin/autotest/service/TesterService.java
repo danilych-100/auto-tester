@@ -2,6 +2,7 @@ package renue.fts.gateway.admin.autotest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import renue.fts.gateway.admin.autotest.documentvariable.VariableContainer;
 import renue.fts.gateway.admin.autotest.jms.MyMessageSender;
 import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
 import renue.fts.gateway.admin.autotest.scenarios.Step;
@@ -11,7 +12,10 @@ import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.BaseDocType;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Danil on 12.07.2017.
@@ -25,21 +29,23 @@ public class TesterService {
     private DocumentCreator documentCreator;
     @Autowired
     private SignatureService signatureService;
-
+    @Autowired
+    private ResponseValidator responseValidator;
     @Autowired
     private EnvelopeCreator envelopeCreator;
+    @Autowired
+    private VariableContainer variableContainer;
+
 
     private Iterator<Step> stepIterator;
     private Step currentStep;
+    private  Map<String,ValidationResult> processingResult;
+    private ScenariosDescription scenariosDescription;
 
-    public ValidationResult getProcessingResult() {
+    public Map<String,ValidationResult> getProcessingResult() {
         return processingResult;
     }
 
-    private ValidationResult processingResult;
-    private ScenariosDescription scenariosDescription;
-    @Autowired
-    private ResponseValidator responseValidator;
 
     /**
      * Start process.
@@ -48,6 +54,7 @@ public class TesterService {
     //CHECKSTYLE:OFF
     public void startProcess(final ScenariosDescription scenariosDescription) throws IOException {
         this.scenariosDescription=scenariosDescription;
+        processingResult = new HashMap<>();
         stepIterator=scenariosDescription.getSteps()
                 .values()
                 .iterator();
@@ -89,14 +96,17 @@ public class TesterService {
             System.out.println("При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
         }
-        processingResult = responseValidator.validate(currentStep.getResponse(), envelopeType);
-        if(processingResult.isValid()) {
+        processingResult.put(currentStep.getName(),responseValidator.validate(currentStep.getResponse(), envelopeType));
+
+        variableContainer.getDocumentVariables().values().forEach(el-> System.out.println(el.getName()+":  "+el.getValue()+ "  Type: "+el.getVariableType()));
+
+        if(processingResult.get(currentStep.getName()).isValid()) {
             processStep();
         }
         else{
-            System.out.println("Ошибка валидации: ");
+            /*System.out.println("Ошибка валидации: ");
             System.out.println(processingResult.getFieldResult().toString());
-            processingResult.getFieldResult().forEach((name,field)-> System.out.println(name+": "+field));
+            processingResult.getFieldResult().forEach((name,field)-> System.out.println(name+": "+field));*/
             return;
         }
     }

@@ -35,15 +35,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/jms.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/CL3Export.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -53,97 +44,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.headers.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.tools.ras.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/jta.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/ldap.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.postcard.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.jms.Nojndi.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/ojdbc14-10.2.0.3.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/providerutil.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.pcf.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.soap.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mqjms.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -170,6 +71,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.postcard.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.commonservices.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -180,6 +90,24 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.jmqi.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.headers.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.jms.Nojndi.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -203,11 +131,47 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/ojdbc14-10.2.0.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="module" module-name="auto-tester_main" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.axis2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/jms.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.tools.ras.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/providerutil.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -231,6 +195,42 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.pcf.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/jta.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mq.soap.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.ibm.mqjms.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jms:4.3.9.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-oxm:4.3.9.RELEASE" level="project" />
@@ -243,6 +243,7 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.9" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.9" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:22.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE" level="project" />
@@ -261,6 +262,10 @@
     <orderEntry type="library" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Gradle: org.jibx:jibx-extras:1.2.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:1.3.9" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.0.18" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE" level="project" />

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 @Data
 public class Body {
     private ParticipantMode participantMode;
+    private String documentID;
+    private String refDocumentID;
 
     private OrganizationInfoType organizationInfo;
     private MyParticipantInfo participantInfo;
