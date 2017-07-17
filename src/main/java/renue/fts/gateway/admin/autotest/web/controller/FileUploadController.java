@@ -51,7 +51,9 @@ public class FileUploadController {
                 String st = bytes.toString();
                 testerService.startProcess(scenariosDescription);
 
-                return "Вы удачно загрузили " + "application.yml";
+                return "Вы удачно загрузили " + "application.yml"+"<br>"+
+                        "Чтобы увидеть лог вернитесь на главную страницу(localhost:8080) и нажмите Check log for ... или перейдите localhost:8080/log" +"<br>"+
+                        "Чтобы увидеть весь ответный документ вернитесь на главную страницу(localhost:8080) и нажмите Check all response ... или перейдите localhost:8080/responseDoc";
             } catch (Exception e) {
                 return "Вам не удалось загрузить " + "application.yml" + " => " + e.getMessage();
             }

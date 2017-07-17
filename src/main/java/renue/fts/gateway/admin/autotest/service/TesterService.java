@@ -42,6 +42,11 @@ public class TesterService {
     private Iterator<Step> stepIterator;
     private Step currentStep;
     private Map<String, ValidationResult> processingResult;
+    private Map<String,EnvelopeType> responseEvelopeDocument = new HashMap<>();
+
+    public Map<String,EnvelopeType> getResponseEvelopeDocument() {
+        return responseEvelopeDocument;
+    }
 
     public Map<String, ValidationResult> getProcessingResult() {
         return processingResult;
@@ -98,10 +103,13 @@ public class TesterService {
                     "При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
         }
+        this.responseEvelopeDocument.put(currentStep.getName(),envelopeType);
         processingResult
                 .put(currentStep.getName(), responseValidator.validate(currentStep.getResponse(), envelopeType));
         if (processingResult.get(currentStep.getName()).isValid()) {
             processStep();
         }
     }
+
+
 }

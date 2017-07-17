@@ -18,6 +18,7 @@ public class Body {
     private String documentID;
     private String refDocumentID;
 
+    private Signature signature;
     private OrganizationInfoType organizationInfo;
     private MyParticipantInfo participantInfo;
     private WarehouseInfoType warehouseInfo;

@@ -34,7 +34,7 @@ public class LoggerController {
 
         Map<String, ValidationResult> validationResult = testerService.getProcessingResult();
         if (validationResult == null) {
-            return DateTime.now().toString() + ": <br>" + " Пока логгировать нечего. Отправте файл.";
+            return "Current time: "+DateTime.now().toString() + ": <br>" + " Пока логгировать нечего. Отправте файл.";
         }
         StringBuilder webLog = new StringBuilder(
                 DateTime.now().toString() + ": <br>" + " <br>" + "Список переменныx: " + " <br>");
