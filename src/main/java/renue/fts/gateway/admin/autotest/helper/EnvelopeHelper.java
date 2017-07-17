@@ -95,7 +95,7 @@ public final class EnvelopeHelper {
      * @param body
      * @return
      */
-    public static BaseDocType getDocument(final BodyType body) {
+    public static SignatureType getDocumentSignatureType(final BodyType body) {
         Object b = body.getAnyList().get(0);
         /*if (b instanceof BaseDocType) {
             return (BaseDocType) b;
@@ -103,7 +103,7 @@ public final class EnvelopeHelper {
 
         if (b instanceof SignatureType) {
             SignatureType signature = (SignatureType) b;
-            return (BaseDocType) signature.getObject().getAny();
+            return signature;
         }
 
         return null;

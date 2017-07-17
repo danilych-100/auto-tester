@@ -44,7 +44,7 @@ public class ResposeDocumentController {
             output += "Response Document: " + " <br> ";
             try {
                 String xmlString = getTransformedEnvelopDoc((EnvelopeType) response.getValue());
-                output += "<pre>" + StringEscapeUtils.escapeHtml4(xmlString) + "</pre>";
+                output += "<pre>" + StringEscapeUtils.escapeHtml4(xmlString) + "</pre>" +"<br>";
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (TransformerConfigurationException e) {
