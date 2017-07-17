@@ -1,7 +1,7 @@
 package renue.fts.gateway.admin.autotest.documentvariable;
 
 /**
- * Created by Danil on 13.07.2017.
+ * Enum Variable Type.
  */
 public enum VariableType {
     GENERATED,

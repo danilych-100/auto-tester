@@ -5,7 +5,7 @@ import ru.kontur.fts.eps.schemas.gwadmin.complextype.ParticipantInfoType;
 
 
 /**
- * Created by Danil on 10.07.2017.
+ * Class wrapper over ParticipantInfoType.
  */
 public class MyParticipantInfo extends ParticipantInfoType {
 
@@ -14,6 +14,7 @@ public class MyParticipantInfo extends ParticipantInfoType {
     }
 
     /**
+     * Setter.
      * @param docBasisDateString
      */
     public void setDocBasisDateString(final String docBasisDateString) {

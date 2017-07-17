@@ -5,7 +5,7 @@ import ru.kontur.fts.eps.schemas.common.RoutingInfType;
 import java.util.Arrays;
 
 /**
- * Created by Danil on 11.07.2017.
+ * Class wrapper over RoutingInfoType.
  */
 public class MyRoutingInfo extends RoutingInfType {
 

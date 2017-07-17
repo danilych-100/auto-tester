@@ -3,13 +3,11 @@ package renue.fts.gateway.admin.autotest.documentvariable;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Danil on 13.07.2017.
+ * Container for document variables.
  */
 @Data
 @Component
@@ -17,7 +15,7 @@ public class VariableContainer {
     private Map<String,DocumentVariable> documentVariables = new HashMap<>();
 
     /**
-     *
+     * Add variable in container.
      * @param documentVariable
      */
     public void addVariable(final DocumentVariable documentVariable){
@@ -25,7 +23,7 @@ public class VariableContainer {
     }
 
     /**
-     *
+     * Get variable from container.
      * @param input
      * @return
      */

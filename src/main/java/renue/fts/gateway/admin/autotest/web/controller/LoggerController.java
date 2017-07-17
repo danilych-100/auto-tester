@@ -24,7 +24,6 @@ public class LoggerController {
 
     /**
      * Controller for /log uri. Show log depends on response result.
-     *
      * @return html string.
      */
     @RequestMapping(value = "/log")

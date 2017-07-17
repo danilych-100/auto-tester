@@ -17,7 +17,7 @@ import java.io.*;
 import java.util.Map;
 
 /**
- * Created by Danil on 17.07.2017.
+ * Response Document controller.
  */
 @Controller
 public class ResposeDocumentController {
@@ -39,7 +39,7 @@ public class ResposeDocumentController {
     String logResult(final HttpServletResponse httpResponse) {
 
         String output = "";
-        for (Map.Entry response : testerService.getResponseEvelopeDocument().entrySet()) {
+        for (Map.Entry response : testerService.getResponseEnvelopeDocument().entrySet()) {
             output += "Transation name:  " + response.getKey() + " <br> ";
             output += "Response Document: " + " <br> ";
             try {

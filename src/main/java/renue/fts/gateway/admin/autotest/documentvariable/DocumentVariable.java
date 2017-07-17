@@ -3,7 +3,7 @@ package renue.fts.gateway.admin.autotest.documentvariable;
 import lombok.Data;
 
 /**
- * Created by Danil on 13.07.2017.
+ * Document variable class.
  */
 @Data
 public class DocumentVariable {
@@ -18,6 +18,7 @@ public class DocumentVariable {
     }
 
     /**
+     * Check is it document generate variable.
      * @param input
      * @return
      */
@@ -26,6 +27,7 @@ public class DocumentVariable {
     }
 
     /**
+     * Check is it document receive variable.
      * @param input
      * @return
      */

@@ -5,7 +5,7 @@ import ru.kontur.fts.eps.schemas.common.KeyInfoType;
 import ru.kontur.fts.eps.schemas.common.SignedInfoType;
 
 /**
- * Created by Danil on 17.07.2017.
+ * Signature type.
  */
 @Data
 public class Signature {

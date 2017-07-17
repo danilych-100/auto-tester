@@ -1,13 +1,10 @@
 package renue.fts.gateway.admin.autotest.web.controller;
 
-//import org.springframework.stereotype.controller;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
 import renue.fts.gateway.admin.autotest.service.TesterService;

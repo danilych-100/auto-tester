@@ -10,7 +10,6 @@ import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import java.io.*;
 
 /**
  * Message listener.
@@ -22,9 +21,6 @@ public class MyMessageListener implements javax.jms.MessageListener {
     private MarshallingService marshallingService;
 
     @Autowired
-    private MyMessageSender producer;
-
-    @Autowired
     private TesterService testerService;
 
     @Override
@@ -34,11 +30,9 @@ public class MyMessageListener implements javax.jms.MessageListener {
             try {
                 byte[] answer = parseInputMessage(message);
                 System.out.println(new String(answer));
-                downloadEnvelopeToFS(answer);
+
                 EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(answer);
                 testerService.processResponse(envelopeType);
-            } catch (JMSException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,7 +40,7 @@ public class MyMessageListener implements javax.jms.MessageListener {
     }
 
     /**
-     * Parse input mess.
+     * Parse input message.
      * @param message
      * @return
      * @throws JMSException
@@ -55,23 +49,6 @@ public class MyMessageListener implements javax.jms.MessageListener {
         byte[] body = new byte[((int) ((JMSBytesMessage) message).getBodyLength())];
         ((JMSBytesMessage) message).readBytes(body);
         return body;
-    }
-
-    /**
-     * donwload Envelope.
-     * @param envelopeTypebytes
-     */
-    private void downloadEnvelopeToFS(final byte[] envelopeTypebytes) {
-        try {
-            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(new File(
-                    "C:\\Users\\Danil\\Desktop\\answer.xml")));
-            outputStream.write(envelopeTypebytes);
-            outputStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Danil on 12.07.2017.
+ * Result of response validation.
  */
 @Data
 @Component

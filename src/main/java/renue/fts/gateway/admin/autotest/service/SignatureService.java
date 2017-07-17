@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by Danil on 12.07.2017.
+ * Service for signing BaseDocType document.
  */
 @Service
 public class SignatureService {

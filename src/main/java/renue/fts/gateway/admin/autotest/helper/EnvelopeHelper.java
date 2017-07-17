@@ -5,18 +5,19 @@ import ru.kontur.fts.eps.schemas.common.BodyType;
 import ru.kontur.fts.eps.schemas.common.HeaderType;
 import ru.kontur.fts.eps.schemas.common.RoutingInfType;
 import ru.kontur.fts.eps.schemas.common.SignatureType;
-import ru.kontur.fts.eps.schemas.gwadmin.complextype.BaseDocType;
 import ru.kontur.fts.eps.schemas.gwadmin.gwheader.GWHeaderType;
 import ru.kontur.fts.eps.schemas.nci.ecopcatalog.EcopCatalogType;
 import ru.kontur.fts.eps.schemas.nci.svhcatalog.SvhCatalogType;
 
 /**
- *Dan.
+ * Envelope helper.
  */
 public final class EnvelopeHelper {
 
     private EnvelopeHelper(){}
+
     /**
+     * Get ApplicationInfoType by header.
      * @param header
      * @return
      */
@@ -31,7 +32,7 @@ public final class EnvelopeHelper {
     }
 
     /**
-     *
+     * Get EcopCatalogType by documentType.
      * @param baseDoc
      * @return
      */
@@ -46,7 +47,7 @@ public final class EnvelopeHelper {
     }
 
     /**
-     *
+     * Get SvhCatalogType by documentType.
      * @param baseDoc
      * @return
      */
@@ -61,7 +62,7 @@ public final class EnvelopeHelper {
     }
 
     /**
-     *
+     * Get RoutingInfType by header.
      * @param header
      * @return
      */
@@ -76,7 +77,7 @@ public final class EnvelopeHelper {
     }
 
     /**
-     *
+     * Get GWHeaderType by header.
      * @param header
      * @return
      */
@@ -91,15 +92,12 @@ public final class EnvelopeHelper {
     }
 
     /**
-     *
+     * Get SignatureType by document body.
      * @param body
      * @return
      */
     public static SignatureType getDocumentSignatureType(final BodyType body) {
         Object b = body.getAnyList().get(0);
-        /*if (b instanceof BaseDocType) {
-            return (BaseDocType) b;
-        }*/
 
         if (b instanceof SignatureType) {
             SignatureType signature = (SignatureType) b;

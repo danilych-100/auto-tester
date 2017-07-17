@@ -33,9 +33,9 @@ public class TesterService {
     private ResponseValidator responseValidator;
     @Autowired
     private EnvelopeCreator envelopeCreator;
+
     @Autowired
     private VariableContainer variableContainer;
-
     public VariableContainer getVariableContainer() {
         return variableContainer;
     }
@@ -46,20 +46,18 @@ public class TesterService {
     private Response currentResponse;
 
     private Map<String, ValidationResult> processingResult;
-    private Map<String,EnvelopeType> responseEvelopeDocument = new HashMap<>();
-
-    public Map<String,EnvelopeType> getResponseEvelopeDocument() {
-        return responseEvelopeDocument;
-    }
-
     public Map<String, ValidationResult> getProcessingResult() {
         return processingResult;
     }
+    private Map<String,EnvelopeType> responseEnvelopeDocument = new HashMap<>();
+    public Map<String,EnvelopeType> getResponseEnvelopeDocument() {
+        return responseEnvelopeDocument;
+    }
+
 
 
     /**
      * Start process.
-     *
      * @param scenariosDescription Description of transaction steps.
      */
     public void startProcess(final ScenariosDescription scenariosDescription) throws IOException {
@@ -86,8 +84,7 @@ public class TesterService {
     }
 
     /**
-     * create Envelope doc.
-     *
+     * Create Envelope doc.
      * @return EnvelopeType document.
      * @throws IOException throw IO exception.
      */
@@ -98,7 +95,7 @@ public class TesterService {
     }
 
     /**
-     * Process REsponse.
+     * Process Response.
      * @param envelopeType Handle response EnvelopeType document.
      */
     public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException,
@@ -126,7 +123,7 @@ public class TesterService {
 
         processingResult
                 .put(currentStep.getName(), responseValidator.validate(response, envelopeType));
-        this.responseEvelopeDocument.put(currentStep.getName(),envelopeType);
+        this.responseEnvelopeDocument.put(currentStep.getName(), envelopeType);
 
         if (processingResult.get(currentStep.getName()).isValid()) {
             if(responseIterator.hasNext()){

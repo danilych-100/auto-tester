@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.MultipartConfigElement;
 
 /**
- * Configuration of web list.
+ * Configuration of web pages.
  */
 @Configuration
 public class WebConfig {
