@@ -48,30 +48,30 @@ class ResponseValidator {
                              (BaseDocType) responseDocumentSignatureType.getObject().getAny(),
                              validationResult);
         }
-        if (expectedResponse.getBody().getSignature().getSignedInfoType() != null) {
+       /* if (expectedResponse.getBody().getSignature() != null) {
             validateSignatureInfo(expectedResponse.getBody().getSignature().getSignedInfoType(),
                                   responseDocumentSignatureType.getSignedInfo(), validationResult);
-        }
-        if (expectedResponse.getBody().getSignature().getKeyInfo() != null) {
+
             validateKeyInfo(expectedResponse.getBody().getSignature().getKeyInfo(),
                             responseDocumentSignatureType.getKeyInfo(), validationResult);
-        }
 
-        if (expectedResponse.getBody().getSignature().getSignatureValue() == responseDocumentSignatureType
-                .getSignatureValue()) {
-            validationResult.getFieldResult().put("signatureValue", "Совпадение с ожидаемым");
-        } else if(expectedResponse.getBody().getSignature().getSignatureValue()!=null){
-            validationResult.setValid(false);
-            validationResult.getFieldResult()
-                    .put("signatureValue",
-                         "Ожидалось: " + expectedResponse.getBody().getSignature().getSignatureValue()
-                                 + " Пришло: " + responseDocumentSignatureType.getSignatureValue());
-        }
+            if (expectedResponse.getBody().getSignature().getSignatureValue() == responseDocumentSignatureType
+                    .getSignatureValue()) {
+                validationResult.getFieldResult().put("signatureValue", "Совпадение с ожидаемым");
+            } else{
+                validationResult.setValid(false);
+                validationResult.getFieldResult()
+                        .put("signatureValue",
+                             "Ожидалось: " + expectedResponse.getBody().getSignature().getSignatureValue()
+                                     + " Пришло: " + responseDocumentSignatureType.getSignatureValue());
+            }
+        }*/
 
         return validationResult;
     }
 
     /**
+     * Validate keyInfoType.
      * @param expectedResponse
      * @param keyInfo
      * @param validationResult
@@ -107,6 +107,7 @@ class ResponseValidator {
     }
 
     /**
+     * Validate SignInfoType.
      * @param expectedResponse
      * @param signedInfo
      * @param validationResult

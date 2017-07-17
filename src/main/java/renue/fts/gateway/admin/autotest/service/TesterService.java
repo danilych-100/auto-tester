@@ -103,9 +103,10 @@ public class TesterService {
                     "При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
         }
-        this.responseEvelopeDocument.put(currentStep.getName(),envelopeType);
         processingResult
                 .put(currentStep.getName(), responseValidator.validate(currentStep.getResponse(), envelopeType));
+
+        this.responseEvelopeDocument.put(currentStep.getName(),envelopeType);
         if (processingResult.get(currentStep.getName()).isValid()) {
             processStep();
         }
