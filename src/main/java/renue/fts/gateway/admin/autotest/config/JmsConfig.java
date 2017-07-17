@@ -46,7 +46,6 @@ public class JmsConfig {
     private String hostName;
 
 
-
     @Autowired
     private MyMessageListener messageListener;
 
