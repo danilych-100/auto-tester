@@ -12,5 +12,4 @@ import java.util.Map;
 @Data
 public class ScenariosDescription {
     private Map<String,Step> steps;
-    //private TransactionDefinition steps;
 }

@@ -2,6 +2,8 @@ package renue.fts.gateway.admin.autotest.scenarios;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 /**
  * Transaction contains: Name, Request, Response.
  */
@@ -9,6 +11,6 @@ import lombok.Data;
 public class Step {
     private String name;
     private Request request;
-    private Response response;
+    private ArrayList<Response> responses;
 
 }

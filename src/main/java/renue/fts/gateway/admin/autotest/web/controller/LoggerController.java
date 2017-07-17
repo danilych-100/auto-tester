@@ -34,14 +34,18 @@ public class LoggerController {
 
         Map<String, ValidationResult> validationResult = testerService.getProcessingResult();
         if (validationResult == null) {
-            return "Current time: "+DateTime.now().toString() + ": <br>" + " Пока логгировать нечего. Отправте файл. Или проверте корректность введенных данных";
+            return "Current time: "+DateTime.now().toString() + ": <br>"
+                    + " Пока логгировать нечего. Отправте файл. Или проверте корректность введенных данных";
         }
+
         StringBuilder webLog = new StringBuilder(
                 DateTime.now().toString() + ": <br>" + " <br>" + "Список переменныx: " + " <br>");
+
         for (Map.Entry variables : testerService.getVariableContainer().getDocumentVariables().entrySet()) {
             webLog.append("<br> " + "Переменная:  ").append(variables.getKey()).append(" со значением:  ")
                     .append(((DocumentVariable) variables.getValue()).getValue()).append(" <br>");
         }
+
         for (Map.Entry entryStepResponse : validationResult.entrySet()) {
             webLog.append(" <br> " + "Transaction Name: ").append(entryStepResponse.getKey()).append(" <br>")
                     .append(" <br>");
@@ -51,7 +55,9 @@ public class LoggerController {
                 webLog.append(entry.getKey()).append(":    ").append(entry.getValue()).append("<br>");
             }
         }
-
+        if(validationResult.containsKey("Not all response here")){
+            webLog.append("Не все ожидаемые ответы пришли.").append("<br>");
+        }
         return webLog.toString();
     }
 }

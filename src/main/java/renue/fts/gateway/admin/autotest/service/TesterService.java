@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import renue.fts.gateway.admin.autotest.documentvariable.VariableContainer;
 import renue.fts.gateway.admin.autotest.jms.MyMessageSender;
+import renue.fts.gateway.admin.autotest.scenarios.Response;
 import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
 import renue.fts.gateway.admin.autotest.scenarios.Step;
 import renue.fts.gateway.admin.autotest.validation.ValidationResult;
@@ -41,6 +42,9 @@ public class TesterService {
 
     private Iterator<Step> stepIterator;
     private Step currentStep;
+    private Iterator<Response> responseIterator;
+    private Response currentResponse;
+
     private Map<String, ValidationResult> processingResult;
     private Map<String,EnvelopeType> responseEvelopeDocument = new HashMap<>();
 
@@ -75,6 +79,7 @@ public class TesterService {
             return;
         }
         currentStep = stepIterator.next();
+        responseIterator = currentStep.getResponses().iterator();
 
         EnvelopeType envelope = createEnvelope();
         messageSender.sendMessage(envelope);
@@ -94,20 +99,42 @@ public class TesterService {
 
     /**
      * Process REsponse.
-     *
      * @param envelopeType Handle response EnvelopeType document.
      */
-    public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException {
+    public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException,
+            InterruptedException {
         if (currentStep == null) {
             System.out.println(
                     "При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
         }
-        processingResult
-                .put(currentStep.getName(), responseValidator.validate(currentStep.getResponse(), envelopeType));
+        if (!responseIterator.hasNext()) {
+            System.out.println("Ожидаемых ответов нет.");
+            return;
+        }
+        currentResponse = responseIterator.next();
+        proccessResponse(envelopeType,currentResponse);
+    }
 
+    /**
+     * ProcessResponses.
+     * @param envelopeType
+     * @param response
+     */
+    private void proccessResponse(final EnvelopeType envelopeType,final Response response) throws
+            IllegalAccessException, IOException, InterruptedException {
+
+        processingResult
+                .put(currentStep.getName(), responseValidator.validate(response, envelopeType));
         this.responseEvelopeDocument.put(currentStep.getName(),envelopeType);
+
         if (processingResult.get(currentStep.getName()).isValid()) {
+            if(responseIterator.hasNext()){
+                System.out.println("waitForResponse");
+                Thread.sleep(60000);
+                processingResult.put("Not all response here",new ValidationResult());
+                return;
+            }
             processStep();
         }
     }
