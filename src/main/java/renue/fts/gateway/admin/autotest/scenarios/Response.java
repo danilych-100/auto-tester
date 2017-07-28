@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class Response {
+    private String responseName;
     private Header header;
     private Body body;
 }

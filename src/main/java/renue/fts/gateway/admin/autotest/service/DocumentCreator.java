@@ -37,17 +37,8 @@ class DocumentCreator {
 
         BaseDocType baseDocType = requestDocumentHeaderChecker.getDocumentTypeByHeader();
         fillBaseDocType(baseDocType, currentStep.getRequest().getBody());
-
-        if (variableContainer.getDocumentVariables().values().stream().filter(var -> Objects
-                .equals(var.getName(), "documentID"))
-                .count() == 0) {
-            baseDocType.setDocumentID(UUID.randomUUID().toString());
-        }
-        if (variableContainer.getDocumentVariables().values().stream().filter(var -> Objects
-                .equals(var.getName(), "refDocumentID"))
-                .count() == 0) {
-            baseDocType.setRefDocumentID(UUID.randomUUID().toString());
-        }
+        baseDocType.setDocumentID(UUID.randomUUID().toString());
+        baseDocType.setRefDocumentID(UUID.randomUUID().toString());
 
         return baseDocType;
     }
@@ -57,7 +48,7 @@ class DocumentCreator {
      * Fill BaseDocType.
      *
      * @param baseDocType Creating BaseDocType document.
-     * @param body Body from configuration.
+     * @param body        Body from configuration.
      */
     private void fillBaseDocType(final BaseDocType baseDocType, final Body body) {
         Field[] baseFields = ReflectionUtility.getAllFields(baseDocType.getClass(), new ArrayList<>());
@@ -74,15 +65,6 @@ class DocumentCreator {
                                 if (documentVariable != null) {
                                     baseField.set(baseDocType, documentVariable.getValue());
                                     continue;
-                                }
-                                if (DocumentVariable.isGenerateDocumentVariable((String) bodyField.get(body))) {
-                                    String varName = ((String) bodyField.get(body)).split("\\.")[1]
-                                            .replaceFirst("\\)", "");
-                                    String varValue = UUID.randomUUID().toString();
-                                    variableContainer.addVariable(
-                                            new DocumentVariable(varName, VariableType.GENERATED, varValue));
-
-                                    baseField.set(baseDocType, varValue);
                                 }
                             } catch (ClassCastException e) {
                                 baseField.set(baseDocType, bodyField.get(body));

@@ -14,6 +14,7 @@ public class WebConfig {
 
     /**
      * Configuration of web list.
+     *
      * @return MultipartConfigElement instance
      */
     @Bean
@@ -23,4 +24,5 @@ public class WebConfig {
         factory.setMaxRequestSize("128KB");
         return factory.createMultipartConfig();
     }
+
 }

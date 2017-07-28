@@ -40,7 +40,7 @@ public class ResposeDocumentController {
 
         String output = "";
         for (Map.Entry response : testerService.getResponseEnvelopeDocument().entrySet()) {
-            output += "Transation name:  " + response.getKey() + " <br> ";
+            output += "Response name:  " + response.getKey() + " <br> ";
             output += "Response Document: " + " <br> ";
             try {
                 String xmlString = getTransformedEnvelopDoc((EnvelopeType) response.getValue());

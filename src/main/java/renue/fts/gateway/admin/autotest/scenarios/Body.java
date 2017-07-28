@@ -17,6 +17,7 @@ public class Body {
     private ParticipantMode participantMode;
     private String documentID;
     private String refDocumentID;
+    private String participantId;
 
     private Signature signature;
     private OrganizationInfoType organizationInfo;

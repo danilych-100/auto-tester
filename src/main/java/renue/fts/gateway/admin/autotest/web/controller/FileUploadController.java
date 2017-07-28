@@ -41,12 +41,10 @@ public class FileUploadController {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-
                 ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
                 ScenariosDescription scenariosDescription = mapper.readValue(bytes, ScenariosDescription.class);
-
-                String st = bytes.toString();
                 testerService.startProcess(scenariosDescription);
+
 
                 return "Вы удачно загрузили " + "application.yml"+"<br>"+
                         "Чтобы увидеть лог вернитесь на главную страницу(localhost:8080) и нажмите Check log for ... или перейдите localhost:8080/log" +"<br>"+

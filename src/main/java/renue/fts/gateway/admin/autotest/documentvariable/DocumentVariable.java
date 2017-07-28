@@ -17,14 +17,9 @@ public class DocumentVariable {
         this.variableType = variableType;
     }
 
-    /**
-     * Check is it document generate variable.
-     * @param input
-     * @return
-     */
-    public static boolean isGenerateDocumentVariable(final String input) {
+    /*public static boolean isGenerateDocumentVariable(final String input) {
         return input.matches("^\\(generated\\.\\w+\\)$");
-    }
+    }*/
 
     /**
      * Check is it document receive variable.

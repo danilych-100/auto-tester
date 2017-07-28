@@ -10,6 +10,9 @@ import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Message listener.
@@ -32,7 +35,21 @@ public class MyMessageListener implements javax.jms.MessageListener {
                 System.out.println(new String(answer));
 
                 EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(answer);
-                testerService.processResponse(envelopeType);
+                ExecutorService executorService = new ScheduledThreadPoolExecutor(2);
+                executorService.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            testerService.processResponse(envelopeType);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }

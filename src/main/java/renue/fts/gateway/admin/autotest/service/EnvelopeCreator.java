@@ -42,11 +42,8 @@ public class EnvelopeCreator {
 
         HeaderType headerType = setUpHeaderFromStep(currentStep);
         envelopeType.setHeader(headerType);
-
         envelopeType.setBody(signedDocument);
-
         return envelopeType;
-
     }
 
     /**
@@ -64,11 +61,14 @@ public class EnvelopeCreator {
 
         MyRoutingInfo routingInf = new MyRoutingInfo();
         routingInf.setSenderInformation(currentStep.getRequest().getHeader().getRoutingInf().getSenderInformation());
-        routingInf.setReceiverInformationString(currentStep.getRequest().getHeader().getRoutingInf().getReceiverInformationString());
+        routingInf.setReceiverInformationString(
+                currentStep.getRequest().getHeader().getRoutingInf().getReceiverInformationString());
         routingInf.setPreparationDateTime(DateTime.now());
 
-        checkAndSetupRoutingInfoVariables(routingInf, currentStep.getRequest().getHeader().getRoutingInf(), "EnvelopeID");
-        checkAndSetupRoutingInfoVariables(routingInf, currentStep.getRequest().getHeader().getRoutingInf(), "InitialEnvelopeID");
+        checkAndSetupRoutingInfoVariables(routingInf, currentStep.getRequest().getHeader().getRoutingInf(),
+                                          "EnvelopeID");
+        checkAndSetupRoutingInfoVariables(routingInf, currentStep.getRequest().getHeader().getRoutingInf(),
+                                          "InitialEnvelopeID");
 
 
         HeaderType headerType = new HeaderType();
@@ -79,32 +79,31 @@ public class EnvelopeCreator {
 
     /**
      * Исходя из имени поля, вызываем для них гет и сет методы для установки значения в поля.
+     *
      * @param requestInfType
      * @param currentRoutingInfType
      * @param nameVariableField
      */
-    private void checkAndSetupRoutingInfoVariables(final RoutingInfType requestInfType, final RoutingInfType currentRoutingInfType, final String nameVariableField) {
+    private void checkAndSetupRoutingInfoVariables(final RoutingInfType requestInfType,
+                                                   final RoutingInfType currentRoutingInfType,
+                                                   final String nameVariableField) {
         try {
-            Method methodGet = ReflectionUtils.findMethod(currentRoutingInfType.getClass(), "get" + nameVariableField,null);
-            Method methodSet = ReflectionUtils.findMethod(requestInfType.getClass(), "set" + nameVariableField, String.class);
+            Method methodGet = ReflectionUtils
+                    .findMethod(currentRoutingInfType.getClass(), "get" + nameVariableField, null);
+            Method methodSet = ReflectionUtils
+                    .findMethod(requestInfType.getClass(), "set" + nameVariableField, String.class);
             String inputVariable = (String) methodGet.invoke(currentRoutingInfType);
             if (inputVariable == null) {
                 methodSet.invoke(requestInfType, UUID.randomUUID().toString());
                 return;
             }
             DocumentVariable documentVariable = variableContainer.getDocumentVariableFromContainer(inputVariable);
-            if(documentVariable!=null){
-                methodSet.invoke(requestInfType,documentVariable.getValue());
+            if (documentVariable != null) {
+                methodSet.invoke(requestInfType, documentVariable.getValue());
                 return;
             }
-            if (DocumentVariable.isGenerateDocumentVariable(inputVariable)) {
-                String varName = inputVariable.split("\\.")[1].replaceFirst("\\)", "");
-                String varValue = UUID.randomUUID().toString();
-                variableContainer.addVariable(new DocumentVariable(varName,
-                                                                   VariableType.GENERATED,
-                                                                   varValue));
-                methodSet.invoke(requestInfType, varValue);
-            }
+            String varValue = UUID.randomUUID().toString();
+            methodSet.invoke(requestInfType, varValue);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
