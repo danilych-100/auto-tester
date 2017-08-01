@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Result of response validation.
+ * Result of responseInfo validation.
  */
 @Data
 @Component
 public class ValidationResult {
 
-    private boolean isValid = true;
+    private boolean valid = true;
     private Map<String, String> fieldResult = new HashMap<>();
     private DateTime validationTime;
 }

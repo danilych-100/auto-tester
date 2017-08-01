@@ -29,7 +29,7 @@ public class ResposeDocumentController {
     private MarshallingService marshaller;
 
     /**
-     * Mapped /responseDoc for output response document.
+     * Mapped /responseDoc for output responseInfo document.
      *
      * @param httpResponse
      * @return
@@ -40,8 +40,8 @@ public class ResposeDocumentController {
 
         String output = "";
         for (Map.Entry response : testerService.getResponseEnvelopeDocument().entrySet()) {
-            output += "Response name:  " + response.getKey() + " <br> ";
-            output += "Response Document: " + " <br> ";
+            output += "Сценарий :  " + response.getKey() + " <br> ";
+            output += "Пришедший документ : " + " <br> ";
             try {
                 String xmlString = getTransformedEnvelopDoc((EnvelopeType) response.getValue());
                 output += "<pre>" + StringEscapeUtils.escapeHtml4(xmlString) + "</pre>" +"<br>";
@@ -54,8 +54,15 @@ public class ResposeDocumentController {
             }
         }
         if (output.equals("")) {
-            return "Wait for response document";
+            return "Пока пришедших документов нет. Ожидайте...";
         }
+
+        output+="<form action=\"/newLogger\">\n" +
+                "        <input type=\"submit\" value=\"Посмотреть лог\" />\n" +
+                "    </form>\n" +
+                "    <form action=\"/\">\n" +
+                "        <input type=\"submit\" value=\"Назад в главное меню\" />\n" +
+                "    </form>";
         return output;
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
@@ -36,8 +37,7 @@ public class FileUploadController {
      * @return Information about upload result.
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody
-    String handleFileUpload(@RequestParam("file") final MultipartFile file) {
+    String handleFileUpload(@RequestParam("file") final MultipartFile file, final Model model) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
@@ -46,14 +46,15 @@ public class FileUploadController {
                 testerService.startProcess(scenariosDescription);
 
 
-                return "Вы удачно загрузили " + "application.yml"+"<br>"+
-                        "Чтобы увидеть лог вернитесь на главную страницу(localhost:8080) и нажмите Check log for ... или перейдите localhost:8080/log" +"<br>"+
-                        "Чтобы увидеть весь ответный документ вернитесь на главную страницу(localhost:8080) и нажмите Check all response ... или перейдите localhost:8080/responseDoc";
+                model.addAttribute("uploadResult","Вы удачно загрузили YML конфиг. Нажмите на кнопку Обновить, через несколько мгновений, чтобы увидеть лог ответа.");
+                return "newLogger";
             } catch (Exception e) {
-                return "Вам не удалось загрузить " + "application.yml" + " => " + e.getMessage();
+                model.addAttribute("uploadResult","Вам не удалось загрузить YML конфиг. Возникла какая-то ошибка. Все тщательно проверте и отправте конфиг снова.");
+                return "newLogger";
             }
         } else {
-            return "Вам не удалось загрузить " + "application.yml" + " потому что файл пустой.";
+            model.addAttribute("uploadResult","Вам не удалось загрузить YML конфиг, потому что файл пуст.");
+            return "newLogger";
         }
     }
 

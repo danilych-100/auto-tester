@@ -42,6 +42,7 @@ public class TesterService {
 
     @Autowired
     private VariableContainer variableContainer;
+    private HashMap<String, ValidationResult> responseInfo;
 
     public VariableContainer getVariableContainer() {
         return variableContainer;
@@ -53,6 +54,11 @@ public class TesterService {
     private Response currentResponse;
     private EnvelopeType currentRequestDocument;
 
+    public boolean isHasNextRespronse() {
+        return hasNextRespronse;
+    }
+
+    private boolean hasNextRespronse = false;
     private List<TransactionInfo> processingResult;
 
     public List<TransactionInfo> getProcessingResult() {
@@ -87,6 +93,7 @@ public class TesterService {
             System.out.println("Больше транзакций нет!");
             return;
         }
+        responseInfo = new HashMap<>();
 
         currentStep = stepIterator.next();
         responseIterator = currentStep.getResponses().iterator();
@@ -113,7 +120,7 @@ public class TesterService {
     /**
      * Process Response.
      *
-     * @param envelopeType Handle response EnvelopeType document.
+     * @param envelopeType Handle responseInfo EnvelopeType document.
      */
     public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException,
             InterruptedException {
@@ -126,6 +133,7 @@ public class TesterService {
             System.out.println("Ожидаемых ответов нет.");
             return;
         }
+        hasNextRespronse = false;
         currentResponse = responseIterator.next();
         proccessResponse(envelopeType, currentResponse);
     }
@@ -139,7 +147,40 @@ public class TesterService {
     private void proccessResponse(final EnvelopeType envelopeType, final Response response) throws
             IllegalAccessException, IOException, InterruptedException {
 
+        ValidationResult validationResult = validateResponse(envelopeType, response);
+        responseInfo.put(response.getResponseName() == null ? "Без названия" : response
+                .getResponseName(), validationResult);
 
+        for(int index=0;index<processingResult.size();index++){
+            if(processingResult.get(index).getTransactionName().equals(currentStep.getName())){
+                processingResult.get(index).setResponseInfo(responseInfo);
+                return;
+            }
+        }
+        TransactionInfo transactionInfo = new TransactionInfo(
+                currentStep.getName() == null ? "Без названия" : currentStep.getName(), responseInfo);
+
+        processingResult.add(transactionInfo);
+        this.responseEnvelopeDocument.put(response.getResponseName(), envelopeType);
+
+        if (validationResult.isValid()) {
+            if (responseIterator.hasNext()) {
+                hasNextRespronse = true;
+                waitForSecondResponse();
+                return;
+            }
+            processStep();
+        }
+    }
+
+    /**
+     * @param envelopeType
+     * @param response
+     * @return
+     * @throws IllegalAccessException
+     */
+    private ValidationResult validateResponse(final EnvelopeType envelopeType, final Response response) throws
+            IllegalAccessException {
         ValidationResult validationResult = responseValidator.validate(response, envelopeType);
         validationResult.setValidationTime(DateTime.now());
 
@@ -152,28 +193,31 @@ public class TesterService {
             validationResult.getFieldResult().put("envelopeID",
                                                   " EnvelopeID не совпадает с InitialEnvelopeID: EnvelopeID: " + requestEnvelopeID + " InitialEnvelopeID: " + responseInitialEnvelopeID);
         }
+        return validationResult;
+    }
 
+    /**
+     * @throws InterruptedException
+     */
+    private void waitForSecondResponse() throws InterruptedException {
+        System.out.println("Waiting For Response ...");
+        Thread.sleep(50000);
+        if (responseIterator.hasNext()) {
+            ValidationResult badResult = new ValidationResult();
+            badResult.setValidationTime(DateTime.now());
+            badResult.setValid(false);
+           // HashMap<String, ValidationResult> responseInfo = new HashMap<>();
+            responseInfo.put("Ответ не пришел", badResult);
 
-        TransactionInfo transactionInfo = new TransactionInfo(currentStep.getName(), response.getResponseName(),
-                                                              validationResult);
-        processingResult.add(transactionInfo);
-        this.responseEnvelopeDocument.put(response.getResponseName(), envelopeType);
-
-        if (validationResult.isValid()) {
-            if (responseIterator.hasNext()) {
-                System.out.println("Waiting For Response ...");
-                Thread.sleep(50000);
-                if (responseIterator.hasNext()) {
-                    ValidationResult badResult = new ValidationResult();
-                    badResult.setValidationTime(DateTime.now());
-                    processingResult
-                            .add(new TransactionInfo(currentStep.getName(), "Not all response here", badResult));
+            for(int index=0;index<processingResult.size();index++){
+                if(processingResult.get(index).getTransactionName().equals(currentStep.getName())){
+                    processingResult.get(index).setResponseInfo(responseInfo);
+                    return;
                 }
-                return;
-
             }
-            processStep();
+            processingResult.add(new TransactionInfo(currentStep.getName(),responseInfo));
         }
     }
+
 
 }
