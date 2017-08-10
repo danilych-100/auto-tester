@@ -1,0 +1,43 @@
+ol {
+    list-style: none; /* Убираем исходные маркеры */
+    counter-reset: elem; /* Обнуляем счетчик списка */
+}
+ol.respList{
+    margin-top: -1em;
+    list-style: none; /* Убираем исходные маркеры */
+    counter-reset: elem; /* Обнуляем счетчик списка */
+}
+ul {
+    list-style: none; /* Убираем исходные маркеры */
+    counter-reset:  item; /* Обнуляем счетчик списка */
+    margin-top: 0;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 0;
+}
+li.scenario:before{
+    content: 'Сценарий :';
+    counter-increment: elem;
+}
+li.response{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 3em;
+    margin-right: 0;
+}
+span.badresult{
+    color:#FF0000;
+}
+span.goodresult{
+    color:#009900;
+}
+a{
+    text-decoration: underline;
+    cursor: auto;
+}
+div.responseInfo{
+    margin-top: 0;
+    margin-bottom: 1em;
+    margin-left: 2em;
+    margin-right: 0;
+}
