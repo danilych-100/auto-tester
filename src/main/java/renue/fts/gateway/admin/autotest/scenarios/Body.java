@@ -5,7 +5,7 @@ import ru.kontur.fts.eps.schemas.gwadmin.complextype.MmpoInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.OrganizationInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.OtherInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.complextype.SvhInfoWithBodyType;
-import ru.kontur.fts.eps.schemas.gwadmin.createparticipantrequest.WarehouseInfoType;
+import ru.kontur.fts.eps.schemas.gwadmin.modifyparticipantrequest.WarehouseInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.result.ResultInfoType;
 import ru.kontur.fts.eps.schemas.gwadmin.simpletype.ParticipantMode;
 

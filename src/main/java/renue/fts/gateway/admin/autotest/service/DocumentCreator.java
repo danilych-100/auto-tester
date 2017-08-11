@@ -66,7 +66,7 @@ class DocumentCreator {
                                     baseField.set(baseDocType, documentVariable.getValue());
                                     continue;
                                 }
-                            } catch (ClassCastException e) {
+                            } catch (Exception e) {
                                 baseField.set(baseDocType, bodyField.get(body));
                                 continue;
                             }

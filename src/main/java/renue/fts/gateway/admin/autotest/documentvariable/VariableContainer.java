@@ -27,7 +27,7 @@ public class VariableContainer {
      * @param input
      * @return
      */
-    public DocumentVariable getDocumentVariableFromContainer(final String input){
+    public DocumentVariable getDocumentVariableFromContainer(final String input) throws Exception{
         String variableName = input.substring(input.indexOf('(')+1,input.indexOf(')'));
         return documentVariables.get(variableName);
     }
