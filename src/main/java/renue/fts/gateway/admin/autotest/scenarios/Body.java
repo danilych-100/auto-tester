@@ -27,7 +27,12 @@ public class Body {
     private Signature signature;
     private OrganizationInfoType organizationInfo;
     private MyParticipantInfo participantInfo;
-    private WarehouseInfoType warehouseInfo;
+    private WarehouseInfoType modifyParticipantWarehouseInfo;
+    private ru.kontur.fts.eps.schemas.gwadmin.createparticipantrequest.WarehouseInfoType createParticipantRequestWarehouseInfo;
+    private ru.kontur.fts.eps.schemas.gwadmin.getparticipantresponse.WarehouseInfoType getParticipantWarehouseInfo;
+    private ru.kontur.fts.eps.schemas.gwadmin.createparticipantnotification.WarehouseInfoType createPartcipantNotificationWarehouseInfo;
+    private ru.kontur.fts.eps.schemas.gwadmin.modifyparticipantnotification.WarehouseInfoType modifyParticipantNotificationWarehouseInfo;
+
     private ArrayList<ResultInfoType> resultInfoList;
 
     private MmpoInfoType mmpoInfoType;
