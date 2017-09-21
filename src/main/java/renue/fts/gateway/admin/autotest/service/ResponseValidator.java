@@ -1,6 +1,7 @@
 package renue.fts.gateway.admin.autotest.service;
 
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import renue.fts.gateway.admin.autotest.documentvariable.DocumentVariable;
 import renue.fts.gateway.admin.autotest.documentvariable.VariableContainer;
@@ -26,6 +27,8 @@ import java.util.Objects;
 @Service
 class ResponseValidator {
 
+    private static final Logger log = Logger.getLogger(ResponseValidator.class);
+
     @Autowired
     private VariableContainer variableContainer;
 
@@ -40,6 +43,7 @@ class ResponseValidator {
             IllegalAccessException {
         ValidationResult validationResult = new ValidationResult();
 
+        log.info("Начинаем валидировать поля ответа");
         SignatureType responseDocumentSignatureType = EnvelopeHelper.getDocumentSignatureType(envelopeType.getBody());
         validateHeaders(expectedResponse, envelopeType.getHeader(), validationResult);
 
@@ -66,7 +70,7 @@ class ResponseValidator {
                                      + " Пришло: " + responseDocumentSignatureType.getSignatureValue());
             }
         }*/
-
+        log.info("Закончили валидировать поля ответа");
         return validationResult;
     }
 
@@ -162,6 +166,7 @@ class ResponseValidator {
     private void validateDocument(final Body expectedResponseBody,
                                   final BaseDocType baseDocType,
                                   final ValidationResult validationResult) {
+        log.info("Начинаем валидировать тело документа");
         for (Field expectedField : ReflectionUtility
                 .getAllFields(expectedResponseBody.getClass(), new ArrayList<>())) {
             for (Field responseField : ReflectionUtility.getAllFields(baseDocType.getClass(), new ArrayList<>())) {
@@ -199,7 +204,7 @@ class ResponseValidator {
                                      "Ожидалось: " + expFieldValue + " Пришло: " + respFieldvalue);
                     }
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error("Ошибка доступа к полю при валидации",e);
                 }
             }
         }
@@ -261,13 +266,16 @@ class ResponseValidator {
     private void validateHeaders(final Response expectedResponse,
                                  final HeaderType responseHeaderType,
                                  final ValidationResult validationResult) throws IllegalAccessException {
+        log.info("Начинаем валидировать header");
         RoutingInfType respRoutingInfType = EnvelopeHelper.getRoutingInf(responseHeaderType);
         GWHeaderType respGWHeaderType = EnvelopeHelper.getGWHeaderType(responseHeaderType);
         if (expectedResponse.getHeader().getRoutingInf() != null) {
             validateRoutingInfType(expectedResponse.getHeader().getRoutingInf(), respRoutingInfType, validationResult);
+            log.info("Закончили валидировать routingInfType");
         }
         if (expectedResponse.getHeader().getGwHeader() != null) {
             validateGWHeaderType(expectedResponse.getHeader().getGwHeader(), respGWHeaderType, validationResult);
+            log.info("Закончили валидировать GWHEaderType");
         }
     }
 
@@ -281,6 +289,7 @@ class ResponseValidator {
     private void validateRoutingInfType(final RoutingInfType expectedRoutingInf,
                                         final RoutingInfType responseRoutingInf,
                                         final ValidationResult validationResult) throws IllegalAccessException {
+        log.info("Начинаем валидировать routingInfType");
         for (Field expectedField : ReflectionUtility.getAllFields(expectedRoutingInf.getClass(), new ArrayList<>())) {
             Field responseField = ReflectionUtils.findField(responseRoutingInf.getClass(), expectedField.getName());
             expectedField.setAccessible(true);
@@ -320,6 +329,7 @@ class ResponseValidator {
     private void validateGWHeaderType(final GWHeaderType expectedGWHeader,
                                       final GWHeaderType responseGWHeader,
                                       final ValidationResult validationResult) throws IllegalAccessException {
+        log.info("Начинаем валидировать GWHEaderType");
         for (Field expectedField : ReflectionUtility.getAllFields(expectedGWHeader.getClass(), new ArrayList<>())) {
             expectedField.setAccessible(true);
             for (Field responseField : ReflectionUtility.getAllFields(responseGWHeader.getClass(), new ArrayList<>())) {

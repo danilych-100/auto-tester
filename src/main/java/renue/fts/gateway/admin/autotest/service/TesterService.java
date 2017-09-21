@@ -1,5 +1,6 @@
 package renue.fts.gateway.admin.autotest.service;
 
+import org.apache.log4j.Logger;
 import org.javatuples.Triplet;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import renue.fts.gateway.admin.autotest.scenarios.ScenariosDescription;
 import renue.fts.gateway.admin.autotest.scenarios.Step;
 import renue.fts.gateway.admin.autotest.transaction.TransactionInfo;
 import renue.fts.gateway.admin.autotest.validation.ValidationResult;
+import renue.fts.gateway.admin.autotest.web.controller.ResposeDocumentController;
 import ru.kontur.fts.eps.schemas.common.BodyType;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 import ru.kontur.fts.eps.schemas.common.RoutingInfType;
@@ -28,6 +30,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  */
 @Service
 public class TesterService {
+
+    private static final Logger log = Logger.getLogger(TesterService.class);
 
     @Autowired
     private MyMessageSender messageSender;
@@ -110,10 +114,9 @@ public class TesterService {
      * @throws IOException throw IO exception.
      */
     private EnvelopeType createEnvelope() throws IOException {
+
         BaseDocType doc = documentCreator.createDocument(currentStep);
-        System.out.println("norm6");
         BodyType signedDocument = signatureService.sign(doc);
-        System.out.println("norm66");
         return envelopeCreator.createEnvelope(signedDocument, currentStep);
     }
 
@@ -124,7 +127,9 @@ public class TesterService {
      */
     public void processResponse(final EnvelopeType envelopeType) throws IOException, IllegalAccessException,
             InterruptedException {
+        log.info("Начинаем обрабатывать ответ");
         if (currentStep == null) {
+            log.warn("При прошлой передаче транзакций была ошибка");
             System.out.println(
                     "При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
@@ -181,6 +186,7 @@ public class TesterService {
      */
     private ValidationResult validateResponse(final EnvelopeType envelopeType, final Response response) throws
             IllegalAccessException {
+        log.info("Начинаем обрабатвать ответ");
         ValidationResult validationResult = responseValidator.validate(response, envelopeType);
         validationResult.setValidationTime(DateTime.now());
 
@@ -193,6 +199,7 @@ public class TesterService {
             validationResult.getFieldResult().put("envelopeID",
                                                   " EnvelopeID не совпадает с InitialEnvelopeID: EnvelopeID: " + requestEnvelopeID + " InitialEnvelopeID: " + responseInitialEnvelopeID);
         }
+        log.info("Закончили обрабатвать ответ");
         return validationResult;
     }
 

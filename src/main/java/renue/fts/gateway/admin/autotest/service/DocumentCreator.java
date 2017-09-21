@@ -1,5 +1,6 @@
 package renue.fts.gateway.admin.autotest.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import renue.fts.gateway.admin.autotest.documentutil.RequestDocumentHeaderChecker;
@@ -21,6 +22,7 @@ import java.util.UUID;
  */
 @Service
 class DocumentCreator {
+    private static final Logger log = Logger.getLogger(DocumentCreator.class);
 
     @Autowired
     private VariableContainer variableContainer;
@@ -32,6 +34,7 @@ class DocumentCreator {
      * @return BaseDocType document.
      */
     BaseDocType createDocument(final Step currentStep) {
+        log.info("начинаем создание тела документа");
         RequestDocumentHeaderChecker requestDocumentHeaderChecker = new RequestDocumentHeaderChecker(
                 currentStep.getRequest().getHeader().getGwHeader().getMessageType());
 
@@ -40,6 +43,7 @@ class DocumentCreator {
         baseDocType.setDocumentID(UUID.randomUUID().toString());
         baseDocType.setRefDocumentID(UUID.randomUUID().toString());
 
+        log.info("Создание тела документа завершено");
         return baseDocType;
     }
 
@@ -75,7 +79,7 @@ class DocumentCreator {
                     }
                 }
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                log.error("ошибка доступа к полю",e);
             }
         }
     }

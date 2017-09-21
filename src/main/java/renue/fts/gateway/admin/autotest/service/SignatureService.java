@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.jibx.JibxMarshaller;
@@ -25,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 /**
@@ -32,6 +34,8 @@ import java.util.Arrays;
  */
 @Service
 public class SignatureService {
+
+    private static final Logger log = Logger.getLogger(SignatureService.class);
 
     @Value("${crypto.url}")
     private String cryptoURL;
@@ -50,24 +54,27 @@ public class SignatureService {
      */
     //CHECKSTYLE:OFF
     public BodyType sign(final BaseDocType doc) throws IOException {
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         StreamResult result = new StreamResult(out);
         try {
+            log.info("Начинаем маршалить тело");
             marshaller.marshal(doc, result);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Ошибка маршаллинга тела", e);
         }
         BodyType bodyType = new BodyType();
+        log.info("Начинаем подпись тела документа");
         if (isNeedUseCrypto) {
             byte[] autoSignedDocument = autoSign(out.toByteArray());
             System.out.println(new String(autoSignedDocument));
+            log.info("Начинаем анмаршалить подписанное тело документа");
             bodyType.setAnyList(Arrays.<Object>asList(marshaller.unmarshal(new StreamSource(new ByteArrayInputStream(
                     autoSignedDocument)))));
+            log.info("Закончили анмаршалить подписанное тело документа");
         } else {
             return manualSign(out.toString());
         }
-
+        log.info("Закончили подписывать");
         return bodyType;
     }
 
@@ -118,23 +125,26 @@ public class SignatureService {
             Response response = send(request, new URI(cryptoURL));
             OkResponse okResponse = ((OkResponse) response);
             return Base64.decodeBase64(okResponse.getDidSign().getBytes().getBytes("UTF-8"));
+        } catch (URISyntaxException e) {
+            log.error("Ошибка при кривом синтаксисе подписи",e);
+        }  catch (IOException e) {
+            log.error("Ошибка отправки на подпись",e);
         }
-        catch (Exception ex){
-            throw new RuntimeException();
+        return new byte[0];
+    }
+
+    public Response send(Object request, URI uri) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        String responseStr = restTemplate.postForObject(uri, request, String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(responseStr, Response.class);
+        } catch (IOException e) {
+            log.error("ошибка при отправке дока на подпись",e);
+            throw new IOException(e.getMessage());
         }
     }
 
-    public Response send(Object request, URI uri) throws Exception {
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            String responseStr = restTemplate.postForObject(uri, request, String.class);
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(responseStr, Response.class);
-        }
-        catch (Exception ex){
-            throw ex;
-        }
-    }
     /**
      * Build body.
      *

@@ -1,5 +1,6 @@
 package renue.fts.gateway.admin.autotest.service;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @Service
 public class EnvelopeCreator {
 
+    private static final Logger log = Logger.getLogger(EnvelopeCreator.class);
 
     @Autowired
     private VariableContainer variableContainer;
@@ -38,11 +40,13 @@ public class EnvelopeCreator {
      * @return
      */
     public EnvelopeType createEnvelope(final BodyType signedDocument, final Step currentStep) {
+        log.info("Начинаем заполнять envelope документа");
         EnvelopeType envelopeType = new EnvelopeType();
 
         HeaderType headerType = setUpHeaderFromStep(currentStep);
         envelopeType.setHeader(headerType);
         envelopeType.setBody(signedDocument);
+        log.info("Закончили с envelope документа");
         return envelopeType;
     }
 
@@ -53,6 +57,7 @@ public class EnvelopeCreator {
      * @return
      */
     private HeaderType setUpHeaderFromStep(final Step currentStep) {
+        log.info("Начинаем заполнять header");
         GWHeaderType gwHeader = new GWHeaderType();
         String mt = currentStep.getRequest().getHeader().getGwHeader().getMessageType();
         String ib = currentStep.getRequest().getHeader().getGwHeader().getInfoBrokerId();
@@ -73,7 +78,7 @@ public class EnvelopeCreator {
 
         HeaderType headerType = new HeaderType();
         headerType.setAnyList(Arrays.<Object>asList(routingInf, gwHeader));
-
+        log.info("Закончили заполнять header");
         return headerType;
     }
 
@@ -105,11 +110,11 @@ public class EnvelopeCreator {
             String varValue = UUID.randomUUID().toString();
             methodSet.invoke(requestInfType, varValue);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 }

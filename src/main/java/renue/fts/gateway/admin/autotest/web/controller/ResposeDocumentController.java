@@ -1,6 +1,7 @@
 package renue.fts.gateway.admin.autotest.web.controller;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,8 @@ import java.util.Map;
 @Controller
 public class ResposeDocumentController {
 
+    private static final Logger log = Logger.getLogger(ResposeDocumentController.class);
+
     @Autowired
     private TesterService testerService;
 
@@ -37,7 +40,7 @@ public class ResposeDocumentController {
     @RequestMapping(value = "/responseDoc")
     public @ResponseBody
     String logResult(final HttpServletResponse httpResponse) {
-
+        log.debug("Начинаем преобразование xml на страницу html");
         String output = "";
         for (Map.Entry response : testerService.getResponseEnvelopeDocument().entrySet()) {
             output += "Сценарий :  " + response.getKey() + " <br> ";
@@ -45,12 +48,8 @@ public class ResposeDocumentController {
             try {
                 String xmlString = getTransformedEnvelopDoc((EnvelopeType) response.getValue());
                 output += "<pre>" + StringEscapeUtils.escapeHtml4(xmlString) + "</pre>" +"<br>";
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerConfigurationException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
-                e.printStackTrace();
+            } catch (IOException | TransformerException e) {
+                log.error("Ошибка разбора пришедшего xml",e);
             }
         }
         if (output.equals("")) {

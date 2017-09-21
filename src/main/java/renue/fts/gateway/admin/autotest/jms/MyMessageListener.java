@@ -1,6 +1,7 @@
 package renue.fts.gateway.admin.autotest.jms;
 
 import com.ibm.jms.JMSBytesMessage;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import renue.fts.gateway.admin.autotest.service.MarshallingService;
@@ -20,6 +21,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 @Component
 public class MyMessageListener implements javax.jms.MessageListener {
 
+    private static final Logger log = Logger.getLogger(MyMessageListener.class);
+
     @Autowired
     private MarshallingService marshallingService;
 
@@ -31,27 +34,28 @@ public class MyMessageListener implements javax.jms.MessageListener {
         if (message instanceof BytesMessage) {
             System.out.println("Message has been consumed");
             try {
+                log.info("Приняли сообщение");
                 byte[] answer = parseInputMessage(message);
                 System.out.println(new String(answer));
 
+                log.info("Начинаем размаршивать сообщение");
                 EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(answer);
+                log.info("Закончили размаршивать сообщение");
                 ExecutorService executorService = new ScheduledThreadPoolExecutor(2);
                 executorService.submit(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             testerService.processResponse(envelopeType);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
+                        } catch (IOException | IllegalAccessException e) {
+                            log.error("ошибка при обработке принятого сообщения",e);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            log.error("ошибка многопоточности",e);
                         }
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("ошибка при обработке принятого сообщения",e);
             }
         }
     }
@@ -63,6 +67,7 @@ public class MyMessageListener implements javax.jms.MessageListener {
      * @throws JMSException
      */
     public static byte[] parseInputMessage(final Message message) throws JMSException {
+
         byte[] body = new byte[((int) ((JMSBytesMessage) message).getBodyLength())];
         ((JMSBytesMessage) message).readBytes(body);
         return body;

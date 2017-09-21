@@ -1,9 +1,11 @@
 package renue.fts.gateway.admin.autotest.jms;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 import renue.fts.gateway.admin.autotest.service.MarshallingService;
+import renue.fts.gateway.admin.autotest.service.TesterService;
 import ru.kontur.fts.eps.schemas.common.EnvelopeType;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.io.IOException;
  */
 @Component
 public class MyMessageSender {
+
+    private static final Logger log = Logger.getLogger(MyMessageSender.class);
 
     @Autowired
     private MarshallingService marshallingService;
@@ -28,12 +32,13 @@ public class MyMessageSender {
 
 
         try {
+            log.info("Пытаемся отправить сообщение");
             byte[] marsheledEnv = marshallingService.marshall(envelopeType);
 
-            System.out.println("Отправили сообщение!");
             jmsTemplate.convertAndSend(marsheledEnv);
+            log.info("Отправили сообщение");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Ошибка при маршаллинге сообщеня",e);
         }
 
     }
