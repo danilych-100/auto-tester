@@ -62,7 +62,7 @@ class DocumentCreator {
                 for (Field bodyField : body.getClass().getDeclaredFields()) {
                     bodyField.setAccessible(true);
                     if (bodyField.get(body) != null) {
-                        if (baseField.getName().equals(bodyField.getName())) {
+                        if (bodyField.getName().toLowerCase().contains(baseField.getName().toLowerCase())) {
                             try {
                                 DocumentVariable documentVariable = variableContainer
                                         .getDocumentVariableFromContainer((String) bodyField.get(body));
