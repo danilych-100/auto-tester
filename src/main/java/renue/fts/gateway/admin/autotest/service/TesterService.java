@@ -130,8 +130,6 @@ public class TesterService {
         log.info("Начинаем обрабатывать ответ");
         if (currentStep == null) {
             log.warn("При прошлой передаче транзакций была ошибка");
-            System.out.println(
-                    "При прошлой передаче транзакций, ход выполнения программы был прерван. Прием сообщений остановлен.");
             return;
         }
         if (!responseIterator.hasNext()) {

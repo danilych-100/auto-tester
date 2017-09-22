@@ -17,89 +17,89 @@
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="file-copy" path="$PROJECT_DIR$/libs/connector.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jta.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.defaultconfig.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/ojdbc14-10.2.0.3.0.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/providerutil.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jmqi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.axis2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.tools.ras.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jms.Nojndi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/fscontext.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mqjms.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.soap.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.postcard.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/rmm.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.axis2.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/dhbcore.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jms.Nojndi.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/ldap.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jms.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Nonexport.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Export.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.headers.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.pcf.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/fscontext.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.defaultconfig.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.tools.ras.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jta.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/libs/jndi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/providerutil.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.jmqi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jms.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.commonservices.jar" />
-          <element id="library" level="project" name="Gradle: org.jibx:jibx-run:1.3.1" />
-          <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.0" />
-          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.1.11" />
-          <element id="library" level="project" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:gw-admin-schemas-dto:1.2-20170526" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/ldap.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/com.ibm.mq.postcard.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/jndi.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/connector.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Export.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/CL3Nonexport.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/dhbcore.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/rmm.jar" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-freemarker:1.5.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.9" />
+          <element id="library" level="project" name="Gradle: org.jdom:jdom:1.1.3" />
+          <element id="library" level="project" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" />
+          <element id="library" level="project" name="Gradle: com.google.code.findbugs:jsr305:1.3.9" />
           <element id="library" level="project" name="Gradle: com.google.errorprone:error_prone_annotations:2.0.18" />
-          <element id="library" level="project" name="Gradle: com.google.guava:guava:22.0" />
-          <element id="library" level="project" name="Gradle: xpp3:xpp3:1.1.3.4.O" />
-          <element id="library" level="project" name="Gradle: org.freemarker:freemarker:2.3.23" />
-          <element id="library" level="project" name="Gradle: xml-apis:xml-apis:1.4.01" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
           <element id="library" level="project" name="Gradle: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
-          <element id="library" level="project" name="Gradle: org.jibx:jibx-extras:1.2.5" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter:1.5.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-oxm:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-jms:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-configuration-processor:1.5.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
-          <element id="library" level="project" name="Gradle: org.hibernate:hibernate-validator:5.3.5.Final" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.jibx:jibx-extras:1.2.5" />
           <element id="library" level="project" name="Gradle: javax.servlet:jstl:1.2" />
-          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:marshaller:1.0" />
+          <element id="library" level="project" name="Gradle: org.hibernate:hibernate-validator:5.3.5.Final" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-tomcat:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:eps-reference-schemas-dto:1.1" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-messaging:4.3.9.RELEASE" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.8.8" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.3.9.RELEASE" />
           <element id="library" level="project" name="Gradle: commons-codec:commons-codec:1.10" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-jms:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: com.google.code.findbugs:jsr305:1.3.9" />
-          <element id="library" level="project" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" />
-          <element id="library" level="project" name="Gradle: com.google.j2objc:j2objc-annotations:1.1" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-oxm:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.1.11" />
+          <element id="library" level="project" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.1.11" />
           <element id="library" level="project" name="Gradle: dom4j:dom4j:1.6.1" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-logging:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.14" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.9.RELEASE" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.8.0" />
           <element id="library" level="project" name="Gradle: org.apache.tomcat.embed:tomcat-embed-core:8.5.15" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat.embed:tomcat-embed-el:8.5.15" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.javatuples:javatuples:1.2" />
-          <element id="library" level="project" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.15" />
-          <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
+          <element id="library" level="project" name="Gradle: xml-apis:xml-apis:1.4.01" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.jdom:jdom:1.1.3" />
           <element id="library" level="project" name="Gradle: org.jboss.logging:jboss-logging:3.3.1.Final" />
-          <element id="library" level="project" name="Gradle: org.slf4j:jcl-over-slf4j:1.7.25" />
-          <element id="library" level="project" name="Gradle: com.fasterxml:classmate:1.3.3" />
-          <element id="library" level="project" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.25" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-logging:1.5.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.1.0.Final" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.15" />
+          <element id="library" level="project" name="Gradle: org.freemarker:freemarker:2.3.23" />
+          <element id="library" level="project" name="Gradle: org.apache.tomcat.embed:tomcat-embed-el:8.5.15" />
+          <element id="library" level="project" name="Gradle: org.javatuples:javatuples:1.2" />
+          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:marshaller:1.0" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.9" />
-          <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.9" />
-          <element id="library" level="project" name="Gradle: org.yaml:snakeyaml:1.18" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.slf4j:jul-to-slf4j:1.7.25" />
+          <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-autoconfigure:1.5.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.fasterxml:classmate:1.3.3" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.google.guava:guava:22.0" />
           <element id="library" level="project" name="Gradle: joda-time:joda-time:2.9.9" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.3.9.RELEASE" />
-          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:eps-reference-schemas-dto:1.1" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-messaging:4.3.9.RELEASE" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-freemarker/1.5.6.RELEASE/fcf4b19a04f4dda6b2d7609a9c3e874cd38a879/spring-boot-starter-freemarker-1.5.6.RELEASE.jar" />
+          <element id="library" level="project" name="Gradle: org.jibx:jibx-run:1.3.1" />
+          <element id="library" level="project" name="Gradle: org.yaml:snakeyaml:1.18" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:4.3.9.RELEASE" />
+          <element id="library" level="project" name="Gradle: ru.kontur.fts.eps.schemas:gw-admin-schemas-dto:1.2-20170526" />
+          <element id="library" level="project" name="Gradle: xpp3:xpp3:1.1.3.4.O" />
         </element>
       </element>
     </root>

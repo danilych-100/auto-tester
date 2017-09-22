@@ -4,6 +4,8 @@
       <root url="jar://$MAVEN_REPOSITORY$/ru/kontur/fts/eps/schemas/gw-admin-schemas-dto/1.2-20170526/gw-admin-schemas-dto-1.2-20170526.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/ru/kontur/fts/eps/schemas/gw-admin-schemas-dto/1.2-20170526/gw-admin-schemas-dto-1.2-20170526-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

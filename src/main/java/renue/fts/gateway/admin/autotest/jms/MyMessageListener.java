@@ -32,11 +32,9 @@ public class MyMessageListener implements javax.jms.MessageListener {
     @Override
     public void onMessage(final javax.jms.Message message) {
         if (message instanceof BytesMessage) {
-            System.out.println("Message has been consumed");
             try {
                 log.info("Приняли сообщение");
                 byte[] answer = parseInputMessage(message);
-                System.out.println(new String(answer));
 
                 log.info("Начинаем размаршивать сообщение");
                 EnvelopeType envelopeType = (EnvelopeType) marshallingService.unmarshall(answer);

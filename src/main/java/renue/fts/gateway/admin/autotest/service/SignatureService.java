@@ -66,7 +66,6 @@ public class SignatureService {
         log.info("Начинаем подпись тела документа");
         if (isNeedUseCrypto) {
             byte[] autoSignedDocument = autoSign(out.toByteArray());
-            System.out.println(new String(autoSignedDocument));
             log.info("Начинаем анмаршалить подписанное тело документа");
             bodyType.setAnyList(Arrays.<Object>asList(marshaller.unmarshal(new StreamSource(new ByteArrayInputStream(
                     autoSignedDocument)))));

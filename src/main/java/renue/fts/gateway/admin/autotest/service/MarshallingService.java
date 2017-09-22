@@ -33,10 +33,8 @@ public class MarshallingService {
         StreamResult result = new StreamResult(out);
 
         marshaller.marshal(envelopeType, result);
-        System.out.println("Замаршелили");
 
         byte[] bytes = out.toByteArray();
-        printForPeople(bytes);
         return bytes;
     }
 
@@ -64,7 +62,6 @@ public class MarshallingService {
     public Object unmarshall(final byte[] bytes) throws Exception {
         try {
             EnvelopeType envelopeType = (EnvelopeType) marshaller.unmarshal(new StreamSource(new ByteArrayInputStream(bytes)));
-            System.out.println("Размаршелили");
             return envelopeType;
 
         } catch (Exception e) {
